@@ -1,0 +1,2 @@
+{"args": {"file_path": "backend/app/main.py"}, "expect": {"distinguishes_repos": true, "repos": ["pipeshub-codegraph-fixture", "pipeshub-codegraph-fixture-admin"]}, "id": "A-3-same-path-two-repos", "tags": ["A-3"], "tool": "read_code"}
+{"args": {"file_path": "backend/app/shared/db.py", "name": "Database"}, "expect": {"distinguishes_repos": true}, "id": "A-3-same-symbol-two-repos", "tags": ["A-3"], "tool": "query_code_graph"}

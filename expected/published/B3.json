@@ -1,0 +1,167 @@
+{
+ "blog": "Post 3",
+ "highlights": [
+  "Initial sync (488 files): graph complete at 140 s, status ready at 150 s, precision 100%, recall 80.2%.",
+  "Incremental pushes (7 steps × 3 repeats): status ready in 6–25 s after the sync starts; the median per step is 6–22 s.",
+  "0 false-positive edges on every step, including file deletes, renames and a file emptied to zero bytes (B3-G6).",
+  "Six gaps found live and all six fixed: a status that said 'pending' for minutes (447 s → 150 s), a lost-update race, duplicate sync points, transport retries, and an emptied file keeping its edges.",
+  "Recovery: killing the connector, the indexing service, Neo4j or the whole container mid-sync leaves no wrong edge; the graph is right again in 42-123 s."
+ ],
+ "method": "This branch (with every benchmark fix) built into an image and run on local Docker Compose with Neo4j, Redis Streams, Qdrant and MongoDB, beside other stacks on the machine. The fixture repo is copied to a private throwaway repo (tushar1245/pipeshub-codegraph-fixture-b3) and synced through the real GitHub Teams connector with a fine-grained token. The 7 mutation steps are fast-forwarded onto its main branch one at a time; each push is followed by a manual sync (no webhook on a local stack), and the time until no file waits to index and the repo's graph build says ready is measured. The live graph is read from Neo4j and scored with the same answer key and scorer as the offline fixture eval. Then services are killed mid-build to check recovery.",
+ "order": 3,
+ "question": "Does the graph work through the real product?",
+ "repos": "pipeshub-codegraph-fixture (488 files at step 0: Python backend, TypeScript frontend, polyglot files), copied to a private throwaway repo.",
+ "status": "done",
+ "summary": "With every fix applied, the live product keeps the code graph exactly right through a real GitHub sync. A first sync of the 488-file fixture is graph-complete in 140 s and reads ready at 150 s. After each later push, the graph is correct and ready 6–25 s after the sync starts. Precision is 100% on all 25 measurements, with no build errors or timeouts. Recall holds at 80.0–80.4%, which matches the offline eval: the live path loses nothing. Killing the connector, the indexing service, Neo4j or the whole app container mid-sync leaves no wrong edge, and the graph is right again within 42-123 s.",
+ "tables": [
+  {
+   "caption": "Seconds from push + sync to status ready, per fixture step, over 3 repeats (min / median / max). Scored live from Neo4j against the step's answer key.",
+   "columns": [
+    "Step",
+    "Change",
+    "Ready min",
+    "Ready median",
+    "Ready max",
+    "FP",
+    "Precision",
+    "Recall"
+   ],
+   "note": "Ready times use the harness's 3 s poll interval, so they are accurate to about ±3 s. Recall excluding test files was 90.5% on the earlier all-fixes run (not recomputed here).",
+   "rows": [
+    [
+     "0 (first sync)",
+     "488 files",
+     "149.6",
+     "149.6",
+     "149.6",
+     "0",
+     "100%",
+     "80.2%"
+    ],
+    [
+     "1",
+     "3 repeats",
+     "15.5",
+     "18.7",
+     "18.8",
+     "0",
+     "100%",
+     "80.2%"
+    ],
+    [
+     "2",
+     "3 repeats",
+     "15.6",
+     "15.6",
+     "15.7",
+     "0",
+     "100%",
+     "80.2%"
+    ],
+    [
+     "3",
+     "3 repeats",
+     "6.2",
+     "12.4",
+     "21.9",
+     "0",
+     "100%",
+     "80.2%"
+    ],
+    [
+     "4",
+     "3 repeats",
+     "9.3",
+     "9.4",
+     "12.5",
+     "0",
+     "100%",
+     "80.4%"
+    ],
+    [
+     "5",
+     "3 repeats",
+     "15.5",
+     "21.8",
+     "21.9",
+     "0",
+     "100%",
+     "80.4%"
+    ],
+    [
+     "6",
+     "file emptied",
+     "6.2",
+     "6.2",
+     "6.3",
+     "0",
+     "100%",
+     "80.3%"
+    ],
+    [
+     "7",
+     "3 repeats",
+     "6.2",
+     "6.3",
+     "6.3",
+     "0",
+     "100%",
+     "80.0%"
+    ],
+    [
+     "back to 0",
+     "revert",
+     "21.6",
+     "21.8",
+     "24.9",
+     "0",
+     "100%",
+     "80.2%"
+    ]
+   ]
+  },
+  {
+   "caption": "Recovery: a service killed or restarted at the moment shown, then seconds from the push until the graph is right and reads ready, and until every record is idle again.",
+   "columns": [
+    "What was killed",
+    "Correct and ready",
+    "Idle",
+    "Wrong edges",
+    "Precision / recall"
+   ],
+   "note": "A normal step is ready in 6-25 s. Idle after an indexing kill includes a 330 s delay before records cut short mid-classification are re-queued (rolling-deploy safety). Killing indexing during the edge build could not be tested: the fixture's whole build takes under a second, so both attempts landed after it finished.",
+   "rows": [
+    [
+     "Connector service killed 1 s into a sync",
+     "60 s",
+     "75 s",
+     "0",
+     "100.0% / 80.2%"
+    ],
+    [
+     "Indexing service killed while files index",
+     "57 s",
+     "419 s",
+     "0",
+     "100.0% / 80.2%"
+    ],
+    [
+     "Neo4j restarted during the edge build",
+     "42 s",
+     "94 s",
+     "0",
+     "100.0% / 80.2%"
+    ],
+    [
+     "Whole app container restarted while files index",
+     "123 s",
+     "123 s",
+     "0",
+     "100.0% / 80.2%"
+    ]
+   ]
+  }
+ ],
+ "title": "Live end to end",
+ "tools": "pipeshub-ai image built from ec84a057f; llm_1 for code-file classification, embedding_1 for embeddings; GitHub Teams connector (the personal GitHub connector is OAuth-only)."
+}

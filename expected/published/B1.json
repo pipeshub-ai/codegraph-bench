@@ -1,0 +1,591 @@
+{
+ "blog": "Post 2: How accurate is your code graph?",
+ "highlights": [
+  "client-go (hand-written): PipesHub 82.9 F1 at 99.4% precision, Graphify 73.6.",
+  "guava: PipesHub 79.0 F1, Graphify 55.9, codebase-memory-mcp 55.8, CodeGraphContext 6.7 (most of its calls resolve into the android/ copy of the same classes).",
+  "excalidraw: PipesHub 87.1 F1 against Graphify's 87.4; pipeshub-ai frontend 90.4 against 82.8. The rest of the excalidraw gap is exported constants, which PipesHub has no symbol for (B1-G7).",
+  "Best settings lifted the others on gin: Graphify 66.5 -> 79.0, codebase-memory-mcp 42.6 -> 70.7, CodeGraphContext 34.2 -> 68.9. PipesHub 86.5.",
+  "Without test files, PipesHub's django recall is 85.6 (77.2 with tests) and gin's 83.8 (76.5)."
+ ],
+ "method": "Compiler-grade truth from SCIP indexers (scip-python, scip-typescript, scip-go, scip-java). Every tool is scored on the same truth and the same relations: CALLS, IMPORTS, IMPORTS_FROM and inheritance.",
+ "order": 1,
+ "question": "Are the code graph's edges right on real code, and how does it compare with other code-graph tools?",
+ "repos": "requests, django, pipeshub-ai backend (Python) · excalidraw, pipeshub-ai frontend (TypeScript) · gin, kubernetes/client-go (Go) · spring-petclinic, guava (Java)",
+ "status": "done",
+ "summary": "With every tool at its best settings, PipesHub has the best F1 on hand-written code on 8 of 9 repos; Graphify edges it on excalidraw, 87.4 against 87.1. PipesHub's precision is the highest or within one point of it on every repo.",
+ "tables": [
+  {
+   "best": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     8,
+     2
+    ]
+   ],
+   "caption": "F1 on hand-written code, in percent (files PipesHub leaves out by policy -- generated, vendored, credentials -- are left out for every tool). The best score in each row is highlighted.",
+   "columns": [
+    "Repo",
+    "Language",
+    "PipesHub",
+    "Graphify",
+    "codebase-memory-mcp",
+    "CodeGraphContext"
+   ],
+   "note": "Every tool at its best settings (see Tools). Java truth without annotation uses, which are not calls. Per-relation tables: reports/b1-v2/COMPARISON.md.",
+   "rows": [
+    [
+     "requests",
+     "Python",
+     "92.5",
+     "91.4",
+     "88.1",
+     "61.1"
+    ],
+    [
+     "django",
+     "Python",
+     "83.9",
+     "76.9",
+     "68.0",
+     "41.6"
+    ],
+    [
+     "pipeshub-ai backend",
+     "Python",
+     "88.6",
+     "81.0",
+     "85.4",
+     "capped (memory)"
+    ],
+    [
+     "excalidraw",
+     "TypeScript",
+     "87.1",
+     "87.4",
+     "57.8",
+     "33.0"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "TypeScript",
+     "90.4",
+     "82.8",
+     "52.9",
+     "22.5"
+    ],
+    [
+     "gin",
+     "Go",
+     "86.5",
+     "79.0",
+     "70.7",
+     "68.9"
+    ],
+    [
+     "kubernetes/client-go",
+     "Go",
+     "82.9",
+     "73.6",
+     "59.6",
+     "51.0"
+    ],
+    [
+     "spring-petclinic",
+     "Java",
+     "94.9",
+     "90.3",
+     "92.5",
+     "84.0"
+    ],
+    [
+     "guava",
+     "Java",
+     "79.0",
+     "55.9",
+     "55.8",
+     "6.7"
+    ]
+   ]
+  },
+  {
+   "best": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     8,
+     2
+    ]
+   ],
+   "caption": "Precision / recall (F1) on hand-written code, in percent.",
+   "columns": [
+    "Repo",
+    "Language",
+    "PipesHub",
+    "Graphify",
+    "codebase-memory-mcp",
+    "CodeGraphContext"
+   ],
+   "rows": [
+    [
+     "requests",
+     "Python",
+     "97.7 / 87.8 (92.5)",
+     "96.8 / 86.5 (91.4)",
+     "91.8 / 84.6 (88.1)",
+     "82.0 / 48.7 (61.1)"
+    ],
+    [
+     "django",
+     "Python",
+     "92.0 / 77.2 (83.9)",
+     "93.0 / 65.5 (76.9)",
+     "75.7 / 61.6 (68.0)",
+     "55.4 / 33.2 (41.6)"
+    ],
+    [
+     "pipeshub-ai backend",
+     "Python",
+     "96.2 / 82.1 (88.6)",
+     "95.2 / 70.5 (81.0)",
+     "94.7 / 77.7 (85.4)",
+     "capped (memory)"
+    ],
+    [
+     "excalidraw",
+     "TypeScript",
+     "95.4 / 80.1 (87.1)",
+     "92.0 / 83.2 (87.4)",
+     "78.6 / 45.8 (57.8)",
+     "65.4 / 22.1 (33.0)"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "TypeScript",
+     "95.8 / 85.7 (90.4)",
+     "82.1 / 83.6 (82.8)",
+     "59.8 / 47.4 (52.9)",
+     "44.4 / 15.1 (22.5)"
+    ],
+    [
+     "gin",
+     "Go",
+     "99.6 / 76.5 (86.5)",
+     "89.5 / 70.8 (79.0)",
+     "77.8 / 64.9 (70.7)",
+     "59.9 / 81.0 (68.9)"
+    ],
+    [
+     "kubernetes/client-go",
+     "Go",
+     "99.4 / 71.1 (82.9)",
+     "82.5 / 66.4 (73.6)",
+     "51.2 / 71.3 (59.6)",
+     "39.8 / 70.9 (51.0)"
+    ],
+    [
+     "spring-petclinic",
+     "Java",
+     "99.7 / 90.6 (94.9)",
+     "98.6 / 83.3 (90.3)",
+     "95.2 / 90.0 (92.5)",
+     "100.0 / 72.3 (84.0)"
+    ],
+    [
+     "guava",
+     "Java",
+     "95.5 / 67.3 (79.0)",
+     "63.6 / 49.8 (55.9)",
+     "54.2 / 57.5 (55.8)",
+     "5.5 / 8.5 (6.7)"
+    ]
+   ]
+  },
+  {
+   "best": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     8,
+     2
+    ]
+   ],
+   "caption": "F1 on hand-written code without test files (tests left out on both sides, by one path rule for every tool).",
+   "columns": [
+    "Repo",
+    "Language",
+    "PipesHub",
+    "Graphify",
+    "codebase-memory-mcp",
+    "CodeGraphContext"
+   ],
+   "note": "PipesHub's recall rises most on django (77 -> 86) and gin (77 -> 84): its misses there are mostly in tests.",
+   "rows": [
+    [
+     "requests",
+     "Python",
+     "92.5",
+     "91.4",
+     "88.1",
+     "61.2"
+    ],
+    [
+     "django",
+     "Python",
+     "89.5",
+     "85.8",
+     "80.3",
+     "49.5"
+    ],
+    [
+     "pipeshub-ai backend",
+     "Python",
+     "88.6",
+     "81.0",
+     "86.1",
+     "capped (memory)"
+    ],
+    [
+     "excalidraw",
+     "TypeScript",
+     "87.4",
+     "89.3",
+     "57.5",
+     "38.4"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "TypeScript",
+     "90.4",
+     "82.6",
+     "54.8",
+     "23.7"
+    ],
+    [
+     "gin",
+     "Go",
+     "91.2",
+     "81.5",
+     "68.8",
+     "82.1"
+    ],
+    [
+     "kubernetes/client-go",
+     "Go",
+     "82.6",
+     "69.2",
+     "62.5",
+     "60.8"
+    ],
+    [
+     "spring-petclinic",
+     "Java",
+     "97.0",
+     "92.1",
+     "91.6",
+     "81.2"
+    ],
+    [
+     "guava",
+     "Java",
+     "79.0",
+     "56.0",
+     "57.8",
+     "7.3"
+    ]
+   ]
+  },
+  {
+   "best": [
+    [
+     0,
+     2
+    ],
+    [
+     1,
+     2
+    ],
+    [
+     2,
+     2
+    ],
+    [
+     3,
+     3
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     3
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     8,
+     2
+    ]
+   ],
+   "caption": "F1 on all relations, every file in the truth, in percent.",
+   "columns": [
+    "Repo",
+    "Language",
+    "PipesHub",
+    "Graphify",
+    "codebase-memory-mcp",
+    "CodeGraphContext"
+   ],
+   "note": "client-go: PipesHub skips its 2,010 generated files by policy while the truth counts them, so its recall is 26.5 here and 71.1 on hand-written code.",
+   "rows": [
+    [
+     "requests",
+     "Python",
+     "92.5",
+     "91.4",
+     "88.1",
+     "61.1"
+    ],
+    [
+     "django",
+     "Python",
+     "83.9",
+     "76.9",
+     "68.0",
+     "41.6"
+    ],
+    [
+     "pipeshub-ai backend",
+     "Python",
+     "88.6",
+     "81.0",
+     "85.4",
+     "capped (memory)"
+    ],
+    [
+     "excalidraw",
+     "TypeScript",
+     "87.1",
+     "87.4",
+     "57.8",
+     "33.0"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "TypeScript",
+     "90.4",
+     "82.8",
+     "52.9",
+     "22.5"
+    ],
+    [
+     "gin",
+     "Go",
+     "86.5",
+     "79.0",
+     "70.7",
+     "68.8"
+    ],
+    [
+     "kubernetes/client-go",
+     "Go",
+     "41.8",
+     "82.0",
+     "59.0",
+     "60.6"
+    ],
+    [
+     "spring-petclinic",
+     "Java",
+     "94.9",
+     "90.3",
+     "92.5",
+     "84.0"
+    ],
+    [
+     "guava",
+     "Java",
+     "78.9",
+     "55.9",
+     "55.7",
+     "6.7"
+    ]
+   ]
+  },
+  {
+   "caption": "Time to index plus export (wall clock) and peak memory.",
+   "columns": [
+    "Repo",
+    "PipesHub",
+    "Graphify",
+    "codebase-memory-mcp",
+    "CodeGraphContext"
+   ],
+   "note": "codebase-memory-mcp indexes in a background daemon, so its memory is not measured (n/m). CodeGraphContext on pipeshub-ai backend was stopped at the machine's memory limit. Graphify column rerun 2026-10-21 (same 0.9.92 build and command; edges identical to B1's). PipesHub's column here is the B1 in-memory harness at the earlier head; for PipesHub after the speed commit, into Neo4j, see B2's build-time table.",
+   "rows": [
+    [
+     "requests",
+     "4.6 s, 0.1 GB",
+     "1.1 s, 0.1 GB",
+     "1.2 s, n/m",
+     "48.1 s, 1.1 GB"
+    ],
+    [
+     "django",
+     "108.1 s, 0.9 GB",
+     "52.3 s, 1.6 GB",
+     "11.4 s, n/m",
+     "2734.1 s, 20.4 GB"
+    ],
+    [
+     "pipeshub-ai backend",
+     "354.3 s, 2.0 GB",
+     "187.3 s, 6.2 GB",
+     "48.5 s, n/m",
+     "capped (memory)"
+    ],
+    [
+     "excalidraw",
+     "13.1 s, 0.3 GB",
+     "7.1 s, 0.3 GB",
+     "4.4 s, n/m",
+     "432.2 s, 3.8 GB"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "26.4 s, 0.3 GB",
+     "8.4 s, 0.3 GB",
+     "4.4 s, n/m",
+     "507.1 s, 4.2 GB"
+    ],
+    [
+     "gin",
+     "1.3 s, 0.1 GB",
+     "0.9 s, 0.1 GB",
+     "2.0 s, n/m",
+     "64.1 s, 1.3 GB"
+    ],
+    [
+     "kubernetes/client-go",
+     "7.9 s, 0.2 GB",
+     "14.7 s, 0.3 GB",
+     "6.4 s, n/m",
+     "1089.0 s, 9.3 GB"
+    ],
+    [
+     "spring-petclinic",
+     "0.7 s, 0.1 GB",
+     "0.6 s, 0.0 GB",
+     "2.0 s, n/m",
+     "tool error after 34 s, 1.1 GB"
+    ],
+    [
+     "guava",
+     "184.7 s, 0.8 GB",
+     "39.5 s, 1.0 GB",
+     "16.0 s, n/m",
+     "5113.4 s, 23.8 GB"
+    ]
+   ]
+  }
+ ],
+ "title": "Graph accuracy on real repos",
+ "tools": "PipesHub (6c6e29ab5) · Graphify 0.9.92 `update --no-cluster` · codebase-memory-mcp 0.12.0, mode full, Go methods shared by several receivers left out · CodeGraphContext 0.6.13 with ENABLE_INHERIT_RESOLVE=true (its SCIP mode left out: it would be scored against the same indexers that make the truth)."
+}

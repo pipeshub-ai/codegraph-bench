@@ -1,0 +1,474 @@
+{
+ "blog": "Post 2",
+ "highlights": [
+  "home-assistant (29,195 files, 19,626 code files): graph time 810 → 566 s after the B2 fixes → 271 s after the speed commit (b479eadf0); 474k code edges, identical before and after.",
+  "Same repo, rerun 2026-10-21: Graphify 0.9.92 took 1,880 s (31 min) and 10.2 GB, 6.9× PipesHub's time; codebase-memory-mcp 110 s and 5 GB (0.11.0). PipesHub is the only one writing to a database server.",
+  "Speed commit b479eadf0: every repo builds 2–3× faster than at the PR's previous head, with every edge set byte-identical (all 9 B1 repos plus home-assistant). PipesHub is now faster than Graphify 0.9.92 on home-assistant (6.9×), pipeshub-ai backend (1.6×) and client-go (1.6×), even on django, and slower on guava and the small and TypeScript repos.",
+  "find_symbol_path on the large tier: p95 30.3 s → 63 ms (B2-G2). pipeshub-ai frontend median 130 → 13 ms (B2-G6).",
+  "Graph time fell 27–30% on the largest repos (django, pipeshub-ai backend, home-assistant). Block projection is still the largest stage: what remains is Neo4j's own write work (B2-G3, partly fixed).",
+  "Money is small: home-assistant costs about $0.70 to embed and about $2.88 of LLM classification input at small-model prices; the default local embedding model costs nothing."
+ ],
+ "method": "Each repo goes through PipesHub's production write path into a fresh Neo4j 5.26 with the shipped settings (2 GB heap, 1 GB page cache, 3 GB and 4 CPU limit, APOC): code file records, parse and block projection, then the edge builder. Measured: time per stage, Neo4j memory and store size, graph size, embedding tokens (the indexer's own code units and tokenizer), LLM classification calls (the production skip policy), and p50/p95 latency of three agent tools on 50 symbols. The graph is read back from Neo4j and scored against the B1 truth.",
+ "order": 2,
+ "question": "How much time, memory and money does the graph cost as repos grow?",
+ "repos": "The nine B1 projects (126 to 7,010 files) plus home-assistant/core as the large tier: 29,197 files, 19,634 Python, chosen because Python is where PipesHub's accuracy is highest. No truth for it: scale only.",
+ "status": "done",
+ "summary": "After the B2 fixes, a 20k-file Python monorepo indexes into Neo4j in 4.5 minutes (13.5 before the B2 fixes, 9.5 after them, 271 s after the speed commit), inside the shipped 3 GB Neo4j limit, and the graph read back from Neo4j scores exactly what B1 scored in memory. Agent tools answer in 4–14 ms at the median and under 0.25 s at p95 on every repo. The run found 8 gaps: 5 fixed, 1 partly fixed, 1 open, 1 kept by decision.",
+ "tables": [
+  {
+   "caption": "Time per stage before → after the fixes, seconds. Timings carry about 20% run-to-run noise on this shared machine; the three smallest repos take seconds either way.",
+   "columns": [
+    "Repo",
+    "Code files",
+    "Records",
+    "Parse",
+    "Projection",
+    "Edge build",
+    "Graph total",
+    "Graph total, speed commit"
+   ],
+   "note": "Parse is shown before the fixes; after them it is no longer inflated by the benchmark's own memory use (B2-G4). Last column: the speed commit (b479eadf0), with code files in flight 8 at a time as the indexer runs them, parsing off the event loop and the compiled Neo4j driver the backend ships; the six smaller repos also after an untimed warm-up of Neo4j's query plans.",
+   "rows": [
+    [
+     "spring-petclinic",
+     "52",
+     "1.5 → 0.5",
+     "0.1",
+     "2.2 → 4.7",
+     "0.5",
+     "4.5 → 6.2",
+     "1.6"
+    ],
+    [
+     "requests",
+     "36",
+     "0.2",
+     "0.2",
+     "2.2 → 3.0",
+     "0.5",
+     "3.6 → 4.3",
+     "1.7"
+    ],
+    [
+     "gin",
+     "98",
+     "1.1 → 0.3",
+     "0.7",
+     "3.8 → 4.3",
+     "0.8 → 0.7",
+     "6.6 → 6.2",
+     "2.6"
+    ],
+    [
+     "excalidraw",
+     "706",
+     "6.7 → 0.9",
+     "3.5",
+     "15.9 → 17.9",
+     "3.2 → 2.5",
+     "31.5 → 26.9",
+     "11.9"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "1,222",
+     "7.5 → 1.0",
+     "4.5",
+     "30.2 → 30.8",
+     "4.2 → 3.5",
+     "48.6 → 42.4",
+     "15.7"
+    ],
+    [
+     "kubernetes/client-go",
+     "460",
+     "14.4 → 1.4",
+     "2.4",
+     "12.3 → 17.6",
+     "2.1 → 1.8",
+     "34.2 → 25.8",
+     "9.2"
+    ],
+    [
+     "guava",
+     "3,272",
+     "22.2 → 1.5",
+     "15.1",
+     "95.0 → 97.5",
+     "23.0 → 20.6",
+     "161.8 → 140.4",
+     "64.2"
+    ],
+    [
+     "pipeshub-ai backend",
+     "3,289",
+     "23.8 → 1.8",
+     "72.6",
+     "155.4 → 137.2",
+     "62.6 → 36.6",
+     "335.3 → 245.7",
+     "118.5"
+    ],
+    [
+     "django",
+     "2,369",
+     "27.9 → 2.8",
+     "13.0",
+     "75.2 → 62.8",
+     "18.6 → 14.8",
+     "141.2 → 100.2",
+     "51.3"
+    ],
+    [
+     "home-assistant",
+     "19,626",
+     "109.8 → 8.0",
+     "80.8",
+     "442.6 → 372.4",
+     "138.3 → 84.3",
+     "809.5 → 566.1",
+     "271.3"
+    ]
+   ]
+  },
+  {
+   "best": [
+    [
+     0,
+     1
+    ],
+    [
+     1,
+     1
+    ],
+    [
+     2,
+     1
+    ],
+    [
+     3,
+     1
+    ],
+    [
+     4,
+     2
+    ],
+    [
+     5,
+     2
+    ],
+    [
+     6,
+     2
+    ],
+    [
+     7,
+     2
+    ],
+    [
+     8,
+     2
+    ],
+    [
+     9,
+     2
+    ]
+   ],
+   "caption": "Build time, PipesHub (speed commit b479eadf0) vs Graphify 0.9.92, both run 2026-10-21 on the same machine and load. The faster time in each row is highlighted.",
+   "columns": [
+    "Repo",
+    "PipesHub",
+    "Graphify 0.9.92",
+    "Faster"
+   ],
+   "note": "PipesHub is timed as a running service writing to Neo4j (records, parse, projection, edge build; 8 files in flight; warm query plans on the six smaller repos). Graphify is timed as a full CLI run (graphify update --no-cluster), Python start-up included, which weighs most on the sub-2-second repos. Graphify's edges matched B1's on every repo, and PipesHub's edge sets are identical to the PR's previous head.",
+   "rows": [
+    [
+     "home-assistant",
+     "271 s",
+     "1,880 s",
+     "PipesHub, 6.9×"
+    ],
+    [
+     "pipeshub-ai backend",
+     "118 s",
+     "187 s",
+     "PipesHub, 1.6×"
+    ],
+    [
+     "kubernetes/client-go",
+     "9.2 s",
+     "14.7 s",
+     "PipesHub, 1.6×"
+    ],
+    [
+     "django",
+     "51 s",
+     "52 s",
+     "about even"
+    ],
+    [
+     "guava",
+     "64 s",
+     "39 s",
+     "Graphify, 1.6×"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "15.7 s",
+     "8.4 s",
+     "Graphify, 1.9×"
+    ],
+    [
+     "excalidraw",
+     "11.9 s",
+     "7.1 s",
+     "Graphify, 1.7×"
+    ],
+    [
+     "requests",
+     "1.7 s",
+     "1.1 s",
+     "Graphify"
+    ],
+    [
+     "gin",
+     "2.6 s",
+     "0.9 s",
+     "Graphify"
+    ],
+    [
+     "spring-petclinic",
+     "1.6 s",
+     "0.6 s",
+     "Graphify"
+    ]
+   ]
+  },
+  {
+   "best": [
+    [
+     0,
+     1
+    ]
+   ],
+   "caption": "Large tier, home-assistant: the same repo through each tool.",
+   "columns": [
+    "Tool",
+    "Time",
+    "Peak memory",
+    "Edges"
+   ],
+   "note": "No truth for this repo, so edge counts are not accuracy. CodeGraphContext was not run here. Graphify was 2,076 s on 0.9.74; its edge count here is the exporter's output, not the mapped count shown before.",
+   "rows": [
+    [
+     "PipesHub (Neo4j), speed commit",
+     "271 s",
+     "2.9 GB indexer + Neo4j within its 3 GB limit",
+     "474,086"
+    ],
+    [
+     "Graphify 0.9.92 (rerun 2026-10-21)",
+     "1,880 s",
+     "10.2 GB",
+     "440,442 exported"
+    ],
+    [
+     "codebase-memory-mcp",
+     "110 s",
+     "5.0 GB (all its processes)",
+     "461,612"
+    ]
+   ]
+  },
+  {
+   "caption": "Graph size and cost drivers. Dollars at list prices, for scale: embeddings $0.02/M tokens, LLM input $0.15/M (estimated for a 128k-context model, output not counted).",
+   "columns": [
+    "Repo",
+    "Code edges",
+    "Store MB",
+    "Embed tokens",
+    "Embed $",
+    "LLM calls",
+    "LLM input tokens",
+    "LLM $"
+   ],
+   "note": "Store size moves in large steps (inferred: Neo4j grows its files in chunks), so every small graph reads about 5 MB.",
+   "rows": [
+    [
+     "spring-petclinic",
+     "325",
+     "5",
+     "45k",
+     "0.00",
+     "18",
+     "27k",
+     "0.00"
+    ],
+    [
+     "requests",
+     "1,309",
+     "5",
+     "114k",
+     "0.00",
+     "16",
+     "65k",
+     "0.01"
+    ],
+    [
+     "gin",
+     "1,741",
+     "5",
+     "225k",
+     "0.00",
+     "51",
+     "101k",
+     "0.02"
+    ],
+    [
+     "excalidraw",
+     "15,690",
+     "5",
+     "1.9M",
+     "0.04",
+     "345",
+     "1.3M",
+     "0.19"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "15,541",
+     "5",
+     "2.4M",
+     "0.05",
+     "687",
+     "2.1M",
+     "0.31"
+    ],
+    [
+     "kubernetes/client-go",
+     "3,480",
+     "5",
+     "1.2M",
+     "0.02",
+     "198",
+     "0.6M",
+     "0.09"
+    ],
+    [
+     "guava",
+     "78,401",
+     "133",
+     "9.4M",
+     "0.19",
+     "798",
+     "3.6M",
+     "0.54"
+    ],
+    [
+     "pipeshub-ai backend",
+     "234,688",
+     "268",
+     "23.7M",
+     "0.47",
+     "1,256",
+     "9.0M",
+     "1.36"
+    ],
+    [
+     "django",
+     "81,094",
+     "133",
+     "5.6M",
+     "0.11",
+     "529",
+     "1.6M",
+     "0.24"
+    ],
+    [
+     "home-assistant",
+     "474,086",
+     "525",
+     "34.9M",
+     "0.70",
+     "8,567",
+     "19.2M",
+     "2.88"
+    ]
+   ]
+  },
+  {
+   "caption": "Agent tool latency over 50 symbols after the fixes, p50 / p95 in ms.",
+   "columns": [
+    "Repo",
+    "get_neighbour",
+    "impact",
+    "find_symbol_path (before → after)"
+   ],
+   "rows": [
+    [
+     "spring-petclinic",
+     "13.8 / 63.4",
+     "5.3 / 20.3",
+     "7.6 / 73 → 7.5 / 64"
+    ],
+    [
+     "requests",
+     "12.0 / 39.0",
+     "6.1 / 32.3",
+     "7.3 / 50 → 8.1 / 47"
+    ],
+    [
+     "gin",
+     "10.0 / 82.2",
+     "10.4 / 40.5",
+     "8.1 / 42 → 6.6 / 35"
+    ],
+    [
+     "excalidraw",
+     "8.9 / 245.7",
+     "8.1 / 55.6",
+     "28.4 / 151 → 13.3 / 46"
+    ],
+    [
+     "pipeshub-ai frontend",
+     "7.6 / 23.3",
+     "8.5 / 21.8",
+     "129.5 / 246 → 12.6 / 53"
+    ],
+    [
+     "kubernetes/client-go",
+     "7.5 / 59.3",
+     "5.0 / 34.9",
+     "9.2 / 133 → 7.3 / 25"
+    ],
+    [
+     "guava",
+     "6.6 / 102.2",
+     "5.3 / 25.2",
+     "7.6 / 142 → 4.5 / 46"
+    ],
+    [
+     "pipeshub-ai backend",
+     "6.3 / 33.3",
+     "5.7 / 28.5",
+     "7.7 / 129 → 5.7 / 109"
+    ],
+    [
+     "django",
+     "9.1 / 50.2",
+     "4.0 / 26.8",
+     "10.2 / 317 → 6.0 / 50"
+    ],
+    [
+     "home-assistant",
+     "5.2 / 55.5",
+     "3.5 / 31.7",
+     "26.6 / 30,345 → 5.5 / 63"
+    ]
+   ]
+  }
+ ],
+ "title": "Scale and cost",
+ "tools": "PipesHub on Neo4j (ff6779185). Large tier also timed for Graphify 0.9.74 and codebase-memory-mcp 0.11.0; CodeGraphContext left out (it hit 35 GB on a 3.5k-file repo in B1). B1 has all four tools on the nine smaller projects."
+}

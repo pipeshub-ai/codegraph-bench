@@ -1,0 +1,10 @@
+repo	source	commit	language
+requests	https://github.com/psf/requests	611c6162cbc4ac2020a2f91c7cfa4f3abf9bbb60	python
+django	https://github.com/django/django	d430084791a61b31cecec132bce3dca19194f7f2	python
+excalidraw	https://github.com/excalidraw/excalidraw	4c37956ba5f04ec342a9d9d5891a38f22c5b7b4e	typescript
+gin	https://github.com/gin-gonic/gin	0f09c3a9b4626d9fe9979cf4d0521d6ae32ab646	go
+client-go	https://github.com/kubernetes/client-go	c2b21233505d3f4704d3f12b7e228191727c16f5	go
+spring-petclinic	https://github.com/spring-projects/spring-petclinic	500158f732419217507c7656904b8e6aa1bcc0d6	java
+guava	https://github.com/google/guava	5e82f2f528fbbd970e00748025b48e3eb42ed702	java
+pipeshub-ai	https://github.com/pipeshub-ai/pipeshub-ai (PR #3841)	ec75f1812ef22850e2abcebe02b2a6d39182c3fb	python+typescript
+home-assistant	https://github.com/home-assistant/core	63e9f9bf2eb899e8313257b2b22e63140f17c76f	python (B2 large tier, no truth)

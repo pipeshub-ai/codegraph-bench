@@ -1,0 +1,124 @@
+{
+ "edges": {
+  "by_language": {
+   "typescript": {
+    "f1": 0.22509913692558894,
+    "fn": 10868,
+    "fp": 2420,
+    "precision": 0.4436781609195402,
+    "recall": 0.15080481325207062,
+    "tp": 1930
+   }
+  },
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.4291272929405225,
+    "fn": 2715,
+    "fp": 2420,
+    "precision": 0.4436781609195402,
+    "recall": 0.4155005382131324,
+    "tp": 1930
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 4927,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   },
+   "IMPORTS_FROM": {
+    "f1": null,
+    "fn": 3226,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.22509913692558894,
+   "fn": 10868,
+   "fp": 2420,
+   "precision": 0.4436781609195402,
+   "recall": 0.15080481325207062,
+   "tp": 1930
+  },
+  "precision_by_confidence": {
+   "EXTRACTED": 0.6824611032531824,
+   "INFERRED": 0.0
+  }
+ },
+ "handwritten": {
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.4291272929405225,
+    "fn": 2715,
+    "fp": 2420,
+    "precision": 0.4436781609195402,
+    "recall": 0.4155005382131324,
+    "tp": 1930
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 4927,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   },
+   "IMPORTS_FROM": {
+    "f1": null,
+    "fn": 3226,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.22509913692558894,
+   "fn": 10868,
+   "fp": 2420,
+   "precision": 0.4436781609195402,
+   "recall": 0.15080481325207062,
+   "tp": 1930
+  }
+ },
+ "without_tests": {
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.4756935607024688,
+    "fn": 2583,
+    "fp": 1537,
+    "precision": 0.5487375220199647,
+    "recall": 0.419811320754717,
+    "tp": 1869
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 4796,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   },
+   "IMPORTS_FROM": {
+    "f1": null,
+    "fn": 3145,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.23659725299069564,
+   "fn": 10524,
+   "fp": 1537,
+   "precision": 0.5487375220199647,
+   "recall": 0.15081094166061487,
+   "tp": 1869
+  }
+ }
+}

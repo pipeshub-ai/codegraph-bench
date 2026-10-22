@@ -1,0 +1,60 @@
+# Everything a reproduction needs pinned, with where each pin came from.
+# bootstrap.sh reads the [subjects], [pipeshub] and [tools] sections; the rest is reference.
+
+[pipeshub]
+# All code-under-test commits are on the public fork's branch below (the PR's history before it was squashed).
+repo   = "https://github.com/tushar1245/pipeshub-ai"
+branch = "backup/code-graph-pre-squash-2026-10-21"
+# Which commit produced which published number. Evidence: report file times against the commit times of the
+# worktree the harness imported (PIPESHUB_PY); see AGENTS.md "Provenance".
+b1            = "6c6e29ab5"   # B1 PipesHub rows, all 9 repositories (reproduced exactly from a clean clone). Measured 2026-10-19 on the
+                              # working tree that became this commit (non-TypeScript rows also reproduce at 8ce111f5a); TypeScript rows re-run 2026-10-20
+b2_graph      = "f9a196bfc"   # B2 graph size, memory, store size, tool latency (reports/b2, 2026-10-17)
+b2_speed      = "b479eadf0"   # B2 build time 271 s on home-assistant (speed3 run, concurrency 8; measured on the working tree committed as this, 2026-10-20)
+b2_speed_base = "8e53d5a11"   # B2 "before" timing (631 s): the PR branch just before the speed commit, 1 file in flight (base run, 2026-10-20 23:23)
+b3_live       = "ec84a057f"   # B3 live GitHub sync + crash recovery (image built from this tree, 2026-10-19)
+b3b_pipeshub  = "6c6e29ab5"   # B3b PipesHub drift: run 2026-10-19 15:22 on the working tree later committed as this (reproduced exactly; 8ce111f5a gives 16 fewer edges)
+b5a           = "f9a196bfc"   # B5a Lite/Verified no-LLM ranking and graph v2 retry (2026-10-18/19)
+b5b_search    = "f9a196bfc"   # B5b search-only arm (2026-10-18)
+b5b_graph     = "4b3b974b7"   # B5b graph arm rerun without the stale-graph warning (2026-10-20)
+b5c           = "4b3b974b7"   # ContextBench retrieval and agent tiers (harness default PIPESHUB_PY on 2026-10-20/21; see AGENTS.md)
+python        = "3.12.3"
+install       = "python3.12 -m venv venv && venv/bin/pip install uv && venv/bin/uv pip install -e . && venv/bin/uv pip install -r <bench>/requirements-bench.txt"
+
+[subjects]   # name = [url, commit, language]; B1 truth and B2 use these exact trees (also in bench/manifest.tsv)
+requests         = ["https://github.com/psf/requests", "611c6162cbc4ac2020a2f91c7cfa4f3abf9bbb60", "python"]
+django           = ["https://github.com/django/django", "d430084791a61b31cecec132bce3dca19194f7f2", "python"]
+excalidraw       = ["https://github.com/excalidraw/excalidraw", "4c37956ba5f04ec342a9d9d5891a38f22c5b7b4e", "typescript"]
+gin              = ["https://github.com/gin-gonic/gin", "0f09c3a9b4626d9fe9979cf4d0521d6ae32ab646", "go"]
+client-go        = ["https://github.com/kubernetes/client-go", "c2b21233505d3f4704d3f12b7e228191727c16f5", "go"]
+spring-petclinic = ["https://github.com/spring-projects/spring-petclinic", "500158f732419217507c7656904b8e6aa1bcc0d6", "java"]
+guava            = ["https://github.com/google/guava", "5e82f2f528fbbd970e00748025b48e3eb42ed702", "java"]
+pipeshub-ai      = ["https://github.com/tushar1245/pipeshub-ai", "ec75f1812ef22850e2abcebe02b2a6d39182c3fb", "python+typescript"]  # the PR's own code as a subject (backend/python and frontend)
+home-assistant   = ["https://github.com/home-assistant/core", "63e9f9bf2eb899e8313257b2b22e63140f17c76f", "python"]          # B2 large tier only, no truth
+
+[fixtures]   # generated test repos (fixture_gen/); main = step 0, tags step-1..step-7
+main  = "https://github.com/tushar1245/pipeshub-codegraph-fixture"
+admin = "https://github.com/tushar1245/pipeshub-codegraph-fixture-admin"
+b3    = "https://github.com/tushar1245/pipeshub-codegraph-fixture-b3"   # the copy B3/B3b check out and (B3 only) push to
+
+[tools]
+graphify            = "graphifyy==0.9.92"                 # pip package; accuracy (B1, B3b) and the 1,880 s home-assistant time
+codebase_memory_mcp = "0.12.0"                            # B1/B3b accuracy; github.com/DeusData/codebase-memory-mcp release binary
+codebase_memory_mcp_scale = "0.11.0"                      # the 110 s home-assistant time (B2) was measured with 0.11.0
+codegraphcontext    = "codegraphcontext==0.6.13"          # pip package; Kuzu backend
+scip                = "v0.10.0"                           # github.com/sourcegraph/scip release (scip print --json)
+scip_python         = "@sourcegraph/scip-python@0.6.6"    # via npx, Node 24
+scip_typescript     = "@sourcegraph/scip-typescript@0.4.0"
+scip_go             = "v0.2.7"                            # release binary, run inside sourcegraph/scip-go:latest for the Go toolchain (GOTOOLCHAIN=auto)
+scip_java           = "sourcegraph/scip-java:latest"      # image as pulled on 2026-10-16; digest not recorded (see AGENTS.md)
+neo4j_image         = "neo4j:5.26.0"                      # B2/B3: 2 GB heap, 1 GB page cache, --memory 3g --cpus 4, APOC
+node                = "24"
+
+[datasets]
+swebench_lite     = { hf = "princeton-nlp/SWE-bench_Lite", revision = "6ec7bb89b9342f664a54a6e0a6ea6501d3437cc2", test_sha256 = "7a21f37b8bc179c7db5beeb14e88ac538ba283455c776e6b2535bbfb6e3551b4", dev_sha256 = "8312f321838051849d2fa7c6ca071244733a3e90bb517ff6ca8186f722199b5c" }
+swebench_verified = { hf = "princeton-nlp/SWE-bench_Verified", revision = "c104f840cc67f8b6eec6f759ebc8b2693d585d4a", test_sha256 = "a45b1fe4e2f0c8390b2b2938ac83e92ed5979000856808f3679c07812e9e6dcd" }
+contextbench      = { git = "https://github.com/anonymousUser2026/ContextBench", commit = "cd5f62e4f3a426ed2a497ad7d1584e1c4b219058", verified_sha256 = "e9dcfd504cbfb849ac815a79040c793d0d92f94eecc9b5a4ee3e1445a2f8a791" }
+
+[models]   # names only; keys go in models.json (models.example.json)
+llm_1       = "gpt-5.6-luna (Azure OpenAI)"   # B3 PipesHub LLM, B5b and B5c agents
+embedding_1 = "text-embedding-3-small (Azure OpenAI)"   # B3 embeddings, B5a/B5c dense retrieval

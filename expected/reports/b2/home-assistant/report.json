@@ -1,0 +1,36 @@
+{
+ "code_files": 19626,
+ "files_in_tree": 29195,
+ "graph": {
+  "code_graph_edges": 474086,
+  "nodes": 324807,
+  "relationships": 798867
+ },
+ "records": 29142,
+ "tools": {
+  "find_symbol_path": {
+   "empty_answers": 30,
+   "errors": 0,
+   "max_ms": 228.2,
+   "n": 50,
+   "p50_ms": 5.5,
+   "p95_ms": 63.0
+  },
+  "get_neighbour": {
+   "empty_answers": 0,
+   "errors": 0,
+   "max_ms": 542.3,
+   "n": 50,
+   "p50_ms": 5.2,
+   "p95_ms": 55.5
+  },
+  "impact": {
+   "empty_answers": 0,
+   "errors": 0,
+   "max_ms": 407.3,
+   "n": 50,
+   "p50_ms": 3.5,
+   "p95_ms": 31.7
+  }
+ }
+}

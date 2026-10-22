@@ -1,0 +1,2 @@
+{"args": {"file_path": "backend/app/analytics/report_builder.py", "lines": "559-569"}, "expect": {"contains": "section_latency_median", "max_lines": 40, "must_not_contain": "def section_revenue_total"}, "id": "A-1-line-range", "tags": ["A-1"], "tool": "read_code"}
+{"args": {"name": "retry_with_backoff"}, "expect": {"paths_include": ["backend/app/shared/retry.py", "backend/app/legacy/retry.py"]}, "id": "A-7-identical-copies", "tags": ["A-7"], "tool": "query_code_graph"}

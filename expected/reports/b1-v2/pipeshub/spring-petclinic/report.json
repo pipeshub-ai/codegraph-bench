@@ -1,0 +1,128 @@
+{
+ "edges": {
+  "by_language": {
+   "java": {
+    "f1": 0.9490445859872612,
+    "fn": 31,
+    "fp": 1,
+    "precision": 0.9966555183946488,
+    "recall": 0.9057750759878419,
+    "tp": 298
+   }
+  },
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.95,
+    "fn": 27,
+    "fp": 1,
+    "precision": 0.9962546816479401,
+    "recall": 0.9078498293515358,
+    "tp": 266
+   },
+   "HERITAGE": {
+    "f1": 0.8,
+    "fn": 4,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "tp": 8
+   },
+   "IMPORTS": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "tp": 24
+   }
+  },
+  "overall": {
+   "f1": 0.9490445859872612,
+   "fn": 31,
+   "fp": 1,
+   "precision": 0.9966555183946488,
+   "recall": 0.9057750759878419,
+   "tp": 298
+  },
+  "precision_by_confidence": {
+   "EXTRACTED": 0.9852941176470589,
+   "INFERRED": 1.0
+  }
+ },
+ "handwritten": {
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.95,
+    "fn": 27,
+    "fp": 1,
+    "precision": 0.9962546816479401,
+    "recall": 0.9078498293515358,
+    "tp": 266
+   },
+   "HERITAGE": {
+    "f1": 0.8,
+    "fn": 4,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "tp": 8
+   },
+   "IMPORTS": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "tp": 24
+   }
+  },
+  "overall": {
+   "f1": 0.9490445859872612,
+   "fn": 31,
+   "fp": 1,
+   "precision": 0.9966555183946488,
+   "recall": 0.9057750759878419,
+   "tp": 298
+  },
+  "precision_by_confidence": {
+   "EXTRACTED": 0.9852941176470589,
+   "INFERRED": 1.0
+  }
+ },
+ "without_tests": {
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.9873417721518988,
+    "fn": 1,
+    "fp": 1,
+    "precision": 0.9873417721518988,
+    "recall": 0.9873417721518988,
+    "tp": 78
+   },
+   "HERITAGE": {
+    "f1": 0.8,
+    "fn": 4,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "tp": 8
+   },
+   "IMPORTS": {
+    "f1": 1.0,
+    "fn": 0,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 1.0,
+    "tp": 10
+   }
+  },
+  "overall": {
+   "f1": 0.9696969696969696,
+   "fn": 5,
+   "fp": 1,
+   "precision": 0.9896907216494846,
+   "recall": 0.9504950495049505,
+   "tp": 96
+  }
+ }
+}

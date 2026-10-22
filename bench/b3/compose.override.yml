@@ -1,0 +1,26 @@
+# B3: this branch on local Docker Compose, beside other sessions' stacks on the same machine.
+# Own image tag, host ports bound to localhost only, Neo4j bolt published for the scorer,
+# and the code sandbox left off (B3 does not run code).
+services:
+  pipeshub-ai:
+    image: pipeshub-ai:cg-b3
+    ports: !override
+      - "127.0.0.1:3940:3000"
+    depends_on: !override
+      qdrant:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+  docker-socket-proxy:
+    image: pipeshub-ai:cg-b3
+    profiles: ["off"]
+  sandbox-image:
+    profiles: ["off"]
+  neo4j:
+    ports:
+      - "127.0.0.1:37687:7687"
+      - "127.0.0.1:37474:7474"

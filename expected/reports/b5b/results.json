@@ -1,0 +1,98 @@
+{
+ "dev/graph": {
+  "acc@1": 87.0,
+  "acc@10": 91.3,
+  "acc@5": 91.3,
+  "errors": 0,
+  "issues": 23,
+  "mean_agent_seconds": 24.1,
+  "mean_cached": 92947,
+  "mean_calls": 9,
+  "mean_completion": 2153,
+  "mean_prompt": 106055,
+  "mean_reasoning": 1508,
+  "mean_tool_calls": 17.7,
+  "no_submit": 0,
+  "tool_mix": {
+   "get_neighbour": 3,
+   "grep": 152,
+   "impact": 1,
+   "list_dir": 31,
+   "outline": 1,
+   "query_code_graph": 2,
+   "read_code": 6,
+   "read_file": 182,
+   "search_code": 6,
+   "submit": 23
+  }
+ },
+ "dev/search": {
+  "acc@1": 91.3,
+  "acc@10": 91.3,
+  "acc@5": 91.3,
+  "errors": 0,
+  "issues": 23,
+  "mean_agent_seconds": 24.5,
+  "mean_cached": 85346,
+  "mean_calls": 10,
+  "mean_completion": 2232,
+  "mean_prompt": 100558,
+  "mean_reasoning": 1543,
+  "mean_tool_calls": 19.1,
+  "no_submit": 0,
+  "tool_mix": {
+   "grep": 190,
+   "list_dir": 39,
+   "read_file": 188,
+   "submit": 23
+  }
+ },
+ "test/graph": {
+  "acc@1": 90.3,
+  "acc@10": 91.7,
+  "acc@5": 91.7,
+  "errors": 0,
+  "issues": 300,
+  "mean_agent_seconds": 46.5,
+  "mean_cached": 83518,
+  "mean_calls": 9,
+  "mean_completion": 2417,
+  "mean_prompt": 112929,
+  "mean_reasoning": 1727,
+  "mean_tool_calls": 18.4,
+  "no_submit": 1,
+  "tool_mix": {
+   "get_neighbour": 58,
+   "grep": 2169,
+   "impact": 7,
+   "list_dir": 300,
+   "outline": 16,
+   "query_code_graph": 12,
+   "read_code": 272,
+   "read_file": 2205,
+   "search_code": 170,
+   "submit": 299
+  }
+ },
+ "test/search": {
+  "acc@1": 89.7,
+  "acc@10": 91.3,
+  "acc@5": 91.3,
+  "errors": 0,
+  "issues": 300,
+  "mean_agent_seconds": 30.8,
+  "mean_cached": 64645,
+  "mean_calls": 8,
+  "mean_completion": 2221,
+  "mean_prompt": 78557,
+  "mean_reasoning": 1581,
+  "mean_tool_calls": 17.5,
+  "no_submit": 0,
+  "tool_mix": {
+   "grep": 2204,
+   "list_dir": 425,
+   "read_file": 2315,
+   "submit": 300
+  }
+ }
+}

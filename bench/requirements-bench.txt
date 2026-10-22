@@ -1,0 +1,4 @@
+# Installed into PipesHub's venv on top of its own dependencies (versions as measured).
+rank-bm25==0.2.2
+pyarrow==21.0.0
+anthropic==0.125.0

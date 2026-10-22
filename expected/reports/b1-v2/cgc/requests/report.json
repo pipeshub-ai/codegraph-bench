@@ -1,0 +1,148 @@
+{
+ "edges": {
+  "by_language": {
+   "python": {
+    "f1": 0.6108490566037736,
+    "fn": 273,
+    "fp": 57,
+    "precision": 0.819620253164557,
+    "recall": 0.4868421052631579,
+    "tp": 259
+   }
+  },
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.8391866913123844,
+    "fn": 31,
+    "fp": 56,
+    "precision": 0.8021201413427562,
+    "recall": 0.8798449612403101,
+    "tp": 227
+   },
+   "HERITAGE": {
+    "f1": 0.9696969696969697,
+    "fn": 1,
+    "fp": 1,
+    "precision": 0.9696969696969697,
+    "recall": 0.9696969696969697,
+    "tp": 32
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 161,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   },
+   "IMPORTS_FROM": {
+    "f1": null,
+    "fn": 80,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.6108490566037736,
+   "fn": 273,
+   "fp": 57,
+   "precision": 0.819620253164557,
+   "recall": 0.4868421052631579,
+   "tp": 259
+  },
+  "precision_by_confidence": {
+   "EXTRACTED": 0.9014598540145985,
+   "INFERRED": 0.2857142857142857
+  }
+ },
+ "handwritten": {
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.8391866913123844,
+    "fn": 31,
+    "fp": 56,
+    "precision": 0.8021201413427562,
+    "recall": 0.8798449612403101,
+    "tp": 227
+   },
+   "HERITAGE": {
+    "f1": 0.9696969696969697,
+    "fn": 1,
+    "fp": 1,
+    "precision": 0.9696969696969697,
+    "recall": 0.9696969696969697,
+    "tp": 32
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 161,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   },
+   "IMPORTS_FROM": {
+    "f1": null,
+    "fn": 80,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.6108490566037736,
+   "fn": 273,
+   "fp": 57,
+   "precision": 0.819620253164557,
+   "recall": 0.4868421052631579,
+   "tp": 259
+  }
+ },
+ "without_tests": {
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.8407407407407408,
+    "fn": 31,
+    "fp": 55,
+    "precision": 0.8049645390070922,
+    "recall": 0.8798449612403101,
+    "tp": 227
+   },
+   "HERITAGE": {
+    "f1": 0.9696969696969697,
+    "fn": 1,
+    "fp": 1,
+    "precision": 0.9696969696969697,
+    "recall": 0.9696969696969697,
+    "tp": 32
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 161,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   },
+   "IMPORTS_FROM": {
+    "f1": null,
+    "fn": 80,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.6115702479338843,
+   "fn": 273,
+   "fp": 56,
+   "precision": 0.8222222222222222,
+   "recall": 0.4868421052631579,
+   "tp": 259
+  }
+ }
+}

@@ -1,0 +1,71 @@
+{
+ "blog": "Post 3",
+ "highlights": [
+  "PipesHub: 99.9 / 89.1 (94.2) after 7 updates; drift none at any step",
+  "Graphify: 93.1 / 76.9 (84.2) after 7 updates; drift up to 29 missing, 0 extra",
+  "codebase-memory-mcp: 91.9 / 72.2 (80.9) after 7 updates; drift none at any step",
+  "CodeGraphContext: 62.9 / 16.0 (25.5) after 7 updates; drift up to 474 missing, 33 extra"
+ ],
+ "method": "The fixture repo (488 files, Python, TypeScript and about a dozen other languages) goes through 7 mutation steps: a rename across 15 files, a file delete, a file move with its importers, a new domain of 19 files, a method removed with its callers, a file emptied, and a move that leaves a re-export. Each tool builds a graph at step 0, then updates it incrementally after each step the way it does in use. Every step is scored against that step's answer key, and compared edge by edge with a fresh full build of the same tree.",
+ "order": 3.5,
+ "question": "After the code changes, is a tool's updated graph as right as a fresh build?",
+ "repos": "pipeshub-codegraph-fixture, steps 0-7",
+ "status": "done",
+ "summary": "PipesHub's and codebase-memory-mcp's updated graphs match a fresh build exactly at every step; PipesHub does so at 94.2 F1 against 80.9. Graphify's updates miss up to 29 edges a fresh build finds. CodeGraphContext's watch mode loses a third of its correct edges over 7 changes (37.9 -> 25.5 F1), since calls from unchanged files into changed ones are not relinked.",
+ "tables": [
+  {
+   "best": [
+    [
+     0,
+     2
+    ]
+   ],
+   "caption": "Precision / recall (F1) on hand-written code of the fixture, in percent: the first full build, the graph after 7 incremental updates, and a fresh build of the same tree. Drift is the edges where the incremental graph and the fresh build disagree.",
+   "columns": [
+    "Tool",
+    "Full build, step 0",
+    "After 7 updates",
+    "Fresh build, step 7",
+    "Drift vs fresh",
+    "Update time"
+   ],
+   "note": "Scored with B1's scorer and relations (CALLS, IMPORTS, IMPORTS_FROM, inheritance), leaving out the files the answer key marks as not to be indexed (minified, generated, vendored). PipesHub's update time is its edge build only; the others include their re-parse.",
+   "rows": [
+    [
+     "PipesHub",
+     "99.9 / 89.4 (94.4)",
+     "99.9 / 89.1 (94.2)",
+     "99.9 / 89.1 (94.2)",
+     "none at any step",
+     "0.1-0.6 s"
+    ],
+    [
+     "Graphify",
+     "93.2 / 77.7 (84.8)",
+     "93.1 / 76.9 (84.2)",
+     "93.2 / 77.7 (84.8)",
+     "up to 29 missing, 0 extra",
+     "3.0-3.4 s"
+    ],
+    [
+     "codebase-memory-mcp",
+     "92.0 / 73.6 (81.8)",
+     "91.9 / 72.2 (80.9)",
+     "91.9 / 72.2 (80.9)",
+     "none at any step",
+     "3.8-4.1 s"
+    ],
+    [
+     "CodeGraphContext",
+     "68.0 / 26.3 (37.9)",
+     "62.9 / 16.0 (25.5)",
+     "68.0 / 25.8 (37.4)",
+     "up to 474 missing, 33 extra",
+     "2.2-32.4 s"
+    ]
+   ]
+  }
+ ],
+ "title": "Accuracy after incremental updates",
+ "tools": "PipesHub (6c6e29ab5, offline harness of the same code as B3) · Graphify 0.9.92 · codebase-memory-mcp 0.12.0 · CodeGraphContext 0.6.13"
+}

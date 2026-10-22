@@ -1,0 +1,88 @@
+{
+ "dev_issues": 23,
+ "methods": {
+  "bm25": {
+   "test": {
+    "acc@1": 44.0,
+    "acc@10": 79.3,
+    "acc@5": 70.3,
+    "recall@1": 44.0,
+    "recall@10": 79.3,
+    "recall@5": 70.3
+   }
+  },
+  "bm25 + graph": {
+   "chosen_on_dev": {
+    "alpha": 2.0,
+    "beta": 0.25
+   },
+   "test": {
+    "acc@1": 40.7,
+    "acc@10": 80.3,
+    "acc@5": 69.3,
+    "recall@1": 40.7,
+    "recall@10": 80.3,
+    "recall@5": 69.3
+   }
+  },
+  "bm25+dense": {
+   "test": {
+    "acc@1": 54.3,
+    "acc@10": 88.3,
+    "acc@5": 82.7,
+    "recall@1": 54.3,
+    "recall@10": 88.3,
+    "recall@5": 82.7
+   }
+  },
+  "bm25+dense + graph": {
+   "chosen_on_dev": {
+    "alpha": 0.5,
+    "beta": 0.25
+   },
+   "test": {
+    "acc@1": 47.3,
+    "acc@10": 87.7,
+    "acc@5": 78.7,
+    "recall@1": 47.3,
+    "recall@10": 87.7,
+    "recall@5": 78.7
+   }
+  },
+  "dense": {
+   "test": {
+    "acc@1": 51.7,
+    "acc@10": 83.7,
+    "acc@5": 77.0,
+    "recall@1": 51.7,
+    "recall@10": 83.7,
+    "recall@5": 77.0
+   }
+  },
+  "dense + graph": {
+   "chosen_on_dev": {
+    "alpha": 2.0,
+    "beta": 0.0
+   },
+   "test": {
+    "acc@1": 39.7,
+    "acc@10": 81.0,
+    "acc@5": 71.7,
+    "recall@1": 39.7,
+    "recall@10": 81.0,
+    "recall@5": 71.7
+   }
+  },
+  "graph only": {
+   "test": {
+    "acc@1": 35.3,
+    "acc@10": 71.7,
+    "acc@5": 65.3,
+    "recall@1": 35.3,
+    "recall@10": 71.7,
+    "recall@5": 65.3
+   }
+  }
+ },
+ "test_issues": 300
+}

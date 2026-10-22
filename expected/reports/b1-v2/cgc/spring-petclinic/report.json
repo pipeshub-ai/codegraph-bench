@@ -1,0 +1,124 @@
+{
+ "edges": {
+  "by_language": {
+   "java": {
+    "f1": 0.8395061728395062,
+    "fn": 91,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.723404255319149,
+    "tp": 238
+   }
+  },
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.8795411089866156,
+    "fn": 63,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.7849829351535836,
+    "tp": 230
+   },
+   "HERITAGE": {
+    "f1": 0.8,
+    "fn": 4,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "tp": 8
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 24,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.8395061728395062,
+   "fn": 91,
+   "fp": 0,
+   "precision": 1.0,
+   "recall": 0.723404255319149,
+   "tp": 238
+  },
+  "precision_by_confidence": {
+   "EXTRACTED": 1.0,
+   "INFERRED": 1.0
+  }
+ },
+ "handwritten": {
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.8795411089866156,
+    "fn": 63,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.7849829351535836,
+    "tp": 230
+   },
+   "HERITAGE": {
+    "f1": 0.8,
+    "fn": 4,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "tp": 8
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 24,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.8395061728395062,
+   "fn": 91,
+   "fp": 0,
+   "precision": 1.0,
+   "recall": 0.723404255319149,
+   "tp": 238
+  }
+ },
+ "without_tests": {
+  "by_relation": {
+   "CALLS": {
+    "f1": 0.8714285714285713,
+    "fn": 18,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.7721518987341772,
+    "tp": 61
+   },
+   "HERITAGE": {
+    "f1": 0.8,
+    "fn": 4,
+    "fp": 0,
+    "precision": 1.0,
+    "recall": 0.6666666666666666,
+    "tp": 8
+   },
+   "IMPORTS": {
+    "f1": null,
+    "fn": 10,
+    "fp": 0,
+    "precision": null,
+    "recall": 0.0,
+    "tp": 0
+   }
+  },
+  "overall": {
+   "f1": 0.8117647058823529,
+   "fn": 32,
+   "fp": 0,
+   "precision": 1.0,
+   "recall": 0.6831683168316832,
+   "tp": 69
+  }
+ }
+}
