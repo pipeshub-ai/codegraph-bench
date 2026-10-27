@@ -328,5 +328,5 @@ class MemBlobStore:
     def __init__(self, graph: MemGraph) -> None:
         self.graph = graph
 
-    async def get_record_from_storage(self, virtual_record_id, org_id):
+    async def get_record_from_storage(self, virtual_record_id, org_id, lookup_result=None):
         return self.graph.blobs.get(virtual_record_id)
