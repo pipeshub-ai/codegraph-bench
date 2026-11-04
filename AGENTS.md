@@ -5,6 +5,11 @@ This repository reproduces every number in the blog post **"How Accurate Is Your
 end to end before running anything. Follow the steps in order; each one says what it costs, how long it takes,
 where its output lands and how to check it.
 
+It also reproduces two later posts: **"Haiku with a code graph matches Sonnet for about a tenth of the cost"**
+(B11: Claude Code alone, with Graphify and with PipesHub, on 300 questions about each of two codebases, with
+three models) and **"A code graph isn't enough"** (B7: Apache Kafka questions answered from the code alone and
+with the project's Jira, wiki and docs connected).
+
 The repository holds the harness, the pins and the published results. Everything large (subject repositories,
 tools, datasets, answer keys) is fetched by `bootstrap.sh` into git-ignored folders.
 
@@ -19,6 +24,8 @@ tools, datasets, answer keys) is fetched by `bootstrap.sh` into git-ignored fold
 | B5a | Without an LLM: does adding graph signals to search rank the file to fix higher (SWE-bench Lite and held-out Verified)? | Embeddings only (dense arms) | `bench/run.sh b5a` |
 | B5b | With an LLM agent: does adding PipesHub's code-graph tools help it find the file to fix (SWE-bench Lite, 300 issues)? | Yes | `bench/run.sh b5b` |
 | B5c | ContextBench (500 tasks, 8 languages): the same, no-LLM retrieval and LLM agent, with the official scorer | Embeddings + LLM | `bench/run.sh b5c` |
+| B11 | Does a code graph help a coding agent answer questions about code? Claude Code alone, + Graphify, + PipesHub, with Haiku, Sonnet and Opus, on 300 questions each about VS Code's core (TypeScript, 4,872 files) and Django 3.2 (Python, 858 files), scored against compiler (and, for Django, runtime) answer keys | Yes: Claude Code (account or API key); PipesHub needs an LLM, an embedding model and a GitHub token | `bench/run.sh b11` |
+| B7 | Kafka: how much of a real engineer's question can be answered from the code alone, and how much once the project's Jira, wiki and docs site are connected? 90 questions, Claude Code alone and PipesHub's agent before and after the three connectors, two LLM graders | Yes: Claude Code, PipesHub's LLM + embeddings, two grader models | `bench/run.sh b7` |
 
 `expected/published/*.json` holds every published table with its caption and notes; `expected/reports/` holds
 the same numbers as machine-readable files that `verify.py` compares against.
@@ -40,6 +47,10 @@ Measured on: Linux x86_64 (Ubuntu 24.04), 32 vCPU (AMD EPYC), 125 GB RAM, shared
   Azure OpenAI). PipesHub's provider names apply (`azureOpenAI`, `openAI`, `anthropic`, ...). B3 also needs a
   GitHub personal access token with `repo` scope as `GITHUB_FIXTURE_TOKEN` (environment or a `.env` file at the
   repo root) and your own copy of the fixture repository (step 3e).
+- **B11 and B7 also need:** the Claude Code CLI (`claude`, 2.1.x; measured up to 2.1.318), logged in to an
+  account that may run Haiku, Sonnet and Opus, or an Anthropic key via `B6_ANTHROPIC_KEY_FROM`; a GitHub token
+  (`GITHUB_FIXTURE_TOKEN`) that can read the repositories the connectors sync; for B7's graders, `llm_judge`
+  (Anthropic) and `llm_2` (GPT on Azure) in `models.json`.
 
 Configuration lives in `bench/env.sh` (defaults) and an optional `config.env` (overrides; see
 `config.env.example`). Every script sources `bench/env.sh`; nothing else hard-codes a path.
@@ -136,6 +147,69 @@ bench/run.sh verify b5a b5b b5c
 Tolerances: B5a ±0.5 points (embeddings come from an API); B5b ±2 points (LLM agent); ContextBench ±1 point
 (the agent tier drifts more than the retrieval tier; read the per-set rows).
 
+### 3h. B11: Claude Code with and without a code graph, three models (keys; a day)
+
+Two codebases, each rebuilt from upstream and checked by its git tree hash: VS Code's `src/vs/{base,editor,platform}`
+(placed at `vs/`) and Django 3.2's `django/` package. PipesHub indexes them through its GitHub connector, so the
+snapshots go to two GitHub repositories of yours (empty when created; private is fine). Set in `config.env`:
+`B11_VSCODE_REPO=you/codegraph-snapshot-vscode` and `B11_DJANGO_REPO=you/codegraph-snapshot-django32`.
+
+```bash
+./bootstrap.sh tools                         # Graphify 0.9.92 (the Graphify arm)
+./bootstrap.sh data2                         # answer keys -> bench/truth/vscode, bench/truth/django32
+./bootstrap.sh pipeshub "$(python3 -c "import tomllib;print(tomllib.load(open('pins.toml','rb'))['pipeshub']['b11'])")"
+bench/b11/snapshot.sh build                  # fetch both upstream commits, rebuild, verify the trees
+bench/b11/snapshot.sh push                   # to $B11_VSCODE_REPO and $B11_DJANGO_REPO
+bench/b11/snapshot.sh graphify               # Graphify's graphs of both trees (about 2 minutes)
+cp bench/b11/b11.env.example bench/b11/b11.env   # generate the secrets it names
+PIPESHUB_REF=<the b11 pin> bench/b11/stack.sh build && bench/b11/stack.sh up    # http://127.0.0.1:3960
+(cd bench/b11 && "$PY" setup.py && "$PY" setup_django.py)   # admin, LLM, embeddings, PAT, both connectors
+bench/b11/wait_index.sh                      # until both repos are indexed and their code graphs built
+bench/run.sh b11                             # MODELS, REPOS, ARMS, REPEATS, JOBS: see bench/run_b11.sh
+bench/run.sh verify b11
+```
+
+- **Setups.** *Claude Code alone*: the checkout through Read, Grep, Glob and read-only shell. *+ Graphify*: also
+  Graphify's MCP server, rules and hooks as its README recommends. *+ PipesHub*: also the stack's
+  `/mcp?tools=code` with a personal access token, and one prompt line asking the agent to start with PipesHub's
+  tools (`B6_PIPESHUB_HINT_EXTRA` in `run_b11.sh`). Every setup gets the same base prompt and questions.
+- **Scoring.** Each answer is a list of functions, scored by F1 against the key. VS Code's key is SCIP's;
+  Django's adds calls seen running Django's own tests (rebuild with `bench/b11/truth/trace.sh` and
+  `cg_eval.b12_runtime`; optional, the key ships in `data-v2`).
+- **Cost** at API prices, per question per setup: Haiku about $0.006–0.012, Sonnet $0.05–0.08, Opus
+  $0.12–0.18. One run of everything (600 questions x 3 setups x 3 models) is about $400. The published runs
+  used a Claude account (`B6_ANTHROPIC_KEY_FROM` empty) and report costs at API prices.
+- **Time.** With 12 questions in flight against one stack, 300 questions with one model and setup took about
+  15 minutes with Sonnet and up to an hour with Haiku (more turns per question). Indexing the two snapshots
+  takes longer than any run; `wait_index.sh` says when it is done.
+- **Check.** `verify.py b11` compares each setup's overall accuracy within 3 points and each question kind within
+  8; tokens, time and cost are reported, not checked.
+
+### 3i. B7: Kafka, with and without the project's knowledge (keys; half a day)
+
+```bash
+./bootstrap.sh pipeshub 0b33bc842            # pins.toml [pipeshub] b7
+cp bench/b7/b7.env.example bench/b7/b7.env   # generate the secrets it names
+PIPESHUB_REF=0b33bc842 bench/b7/stack.sh build && bench/b7/stack.sh up    # http://127.0.0.1:3950, plus jira-proxy
+(cd bench/b7 && "$PY" setup.py)              # stage 1: admin, LLM, embeddings, GitHub connector on $B7_KAFKA_REPO
+(cd bench/b7 && "$PY" setup_phase_b.py)      # stage 2: Jira (KAFKA, since 2022), Confluence (KAFKA space), docs site
+bench/b7/checkout.sh                         # Claude Code's checkout: kafka_trunk.sha, docs/ removed
+bench/run.sh b7                              # CC_ARMS=plain by default; PipesHub's agent with code only and with all four sources; grading
+bench/run.sh verify b7
+```
+
+- **Setups in the post.** *Claude Code alone* (`cc-plain`): the checkout. *PipesHub, repository only*
+  (`agent-code-only`): PipesHub's agent limited to the GitHub connector. *PipesHub, repository + knowledge*
+  (`agent-with-company`): the same agent with all four connectors. The scripts also run the setups the first
+  version of the post had (`CC_ARMS="graphify pipeshub-code pipeshub dump"`).
+- **The code connector syncs a repository's default branch.** The published run synced `apache/kafka` at
+  `kafka_trunk.sha`; to pin it, point `B7_KAFKA_REPO` at a fork whose default branch is that commit.
+- **Apache's Jira** is read through `jira_proxy.py` (a local read-only proxy in the stack) so the Jira Data Center
+  connector can page it; a company points the connector at its own Jira.
+- **Grading.** `grade_v2.py`: `llm_judge` (Claude Sonnet) and `llm_2` (GPT) score each answer as correct, partly
+  correct or wrong against the reference answer and its key facts; the post reports judge A's "correct".
+- **Check.** `verify.py b7` compares each setup's share correct per judge within 5 points.
+
 ## 4. Pins and provenance
 
 `pins.toml` pins every input. The PipesHub code under test is on the public fork
@@ -164,6 +238,15 @@ Not pinned: the `sourcegraph/scip-java:latest` and `sourcegraph/scip-go:latest` 
 supplies the Go toolchain). If a newer image changes a Java answer key, use the published keys
 (`./bootstrap.sh data`) to separate a truth change from a tool change.
 
+### Provenance: B11 and B7
+
+| Numbers | What produced them |
+| --- | --- |
+| B11 Claude Code alone, + Graphify | Claude Code 2.1.x with Graphify 0.9.92, 2026-11-01..02: two runs with Haiku, one with Sonnet and Opus. No PipesHub involved |
+| B11 + PipesHub: accuracy, tokens, cost | An experiment build of PipesHub (`exp/cg-ab` at `746e847ad`, not public) with four switches on: the wider text scan, unlinked call sites in caller lists, the constructor path rule, and a note on a path search that found nothing; 2026-11-03..04, one run with Haiku and Opus, two with Sonnet on VS Code and three on Django. The same behaviour is now on `main` without switches: #5106 (the first three), #5352 (the note) and #5353 (the missing-path listing). The `b11` pin is that `main`; it has not been re-run, so expect agreement within the tolerance, not exactly |
+| B11 + PipesHub: time | The same questions on an earlier build without the extra prompt line (image of 2026-10-30, the Python call-resolution work of #5105), because part of the experiment-build runs overlapped a period when the stack was overloaded (see Pitfalls) |
+| B7 | Image built 2026-10-21 05:17 from the code-graph pull request's tree; its last commit then was `0b33bc842` (inferred from the times). Runs 2026-10-30: Claude Code (Sonnet) twice per setup, PipesHub's agent (`llm_1`) once per setup |
+
 ## 5. Pitfalls we hit (read before debugging)
 
 - **Wrong PipesHub commit.** Numbers move with the commit. Always go through `bench/run.sh` (it sets
@@ -187,6 +270,21 @@ supplies the Go toolchain). If a newer image changes a Java answer key, use the 
 - **Generated outputs are large.** `bench/work-v2` (tool copies, ~1.5 GB) and `reports/b2-speed` edge dumps
   (~2 GB) can be deleted after verifying.
 
+- **B11: too many questions in flight breaks the PipesHub arm silently.** Around 30–48 concurrent agents, the
+  stack's Neo4j connection pool ran out: tool calls came back as timeouts, "Tool not found" or "No indexed
+  repository you can read", and about 22% of answers were affected. Keep `JOBS` so the total is 12 or less, and
+  check transcripts for those strings (`B6_KEEP_STREAM=1` keeps them) before trusting a table. The published
+  numbers re-ran every affected question at 12 in flight.
+- **B11: a usage limit is scored as a wrong answer.** On an account, `usage_limit_reached` ends the run; the run
+  script counts them at the end. Delete those answers' `.json` and rerun (finished answers are skipped).
+- **B11: "not found" for an indexed repo.** If every code tool says the repository is not indexed or not
+  readable after a sync, the org READER edge on its record group was dropped; `keep_acl.sh` (started by the run
+  script) re-adds it.
+- **B11: answers in VS Code's real layout.** The snapshot drops `src/`; agents sometimes answer `src/vs/...`.
+  The VS Code runs score with `B8_STRIP_SRC=1`, which accepts both.
+- **B7: the code connector follows the default branch** (see 3i), and the Kafka answers depend on what the
+  tracker and wiki hold on the day you sync; expect drift beyond the tolerance on questions about recent issues.
+
 ## 6. Published data (release `data-v1`)
 
 `./bootstrap.sh data` downloads release `data-v1` of `pipeshub-ai/codegraph-bench` into `work/data`,
@@ -202,6 +300,12 @@ sha256sum -c SHA256SUMS
 `MANIFEST.md` in the release lists each asset: the answer keys, every tool's B1/B3b edges, the B1/B2/B3/B3b/B5
 reports and the B5 per-issue outputs.
 
+Release **`data-v2`** (`./bootstrap.sh data2`) adds B11's answer keys (`truth-b11.tar.gz`, unpacked into
+`bench/truth/vscode` and `bench/truth/django32`), every B11 answer with its scores (`b11-reports.tar.gz`: the
+`b11-q300-*`/`b12-q300-*` runs behind the Claude Code alone and Graphify rows, the `b11-full-*`/`b12-full-*`
+runs behind the PipesHub rows; `b11` is VS Code, `b12` Django) and B7's answers and both judges' grades
+(`b7-reports.tar.gz`). Agent transcripts are not included.
+
 ## 7. Layout
 
 ```
@@ -214,6 +318,10 @@ bench/run_b1_v2.sh      B1 (all tools, memory guard)      bench/adapters/   each
 bench/run_b2*.sh, run_tools_large.sh, compile_b2.py       B2
 bench/b3/               B3 live stack, steps, recovery     bench/b3b/        B3b incremental runs + rescore
 bench/run_b5*.sh        B5a/B5b                            bench/contextbench/  B5c
+bench/b11/               B11: snapshot.sh, stack, setup, keep_acl, wait_index, the two 300-question sets, truth/ (Django trace)
+bench/run_b11.sh         B11 runner (3 setups x models x repos)
+bench/b7/                B7 (Kafka): stack, two-stage setup, jira_proxy, checkout.sh, ask.py (PipesHub agent), ask_cc.py (Claude Code), grade_v2.py, questions_v2.jsonl
+bench/run_b7v2.sh        B7 runner
 src/cg_eval/            the harness: runs PipesHub's own parser, projection and edge builder in memory (B1, B3b, B5)
                         or against Neo4j (B2), and the scorer
 fixture_gen/, gold/     the generated fixture repositories and their answer keys (B3, B3b)

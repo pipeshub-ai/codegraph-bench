@@ -215,7 +215,7 @@ def code_edges(graph: MemGraph, group_id: str | None = None) -> list[dict]:
             if rec is not None and graph.records.get(rec, {}).get("recordGroupId") != group_id:
                 continue
         out.append({"rel": e["relationshipType"], "from": src, "to": dst,
-                    "confidence": e.get("confidence")})
+                    "confidence": e.get("confidence"), "resolution": e.get("resolution")})
     return out
 
 

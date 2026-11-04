@@ -11,6 +11,7 @@
 #   ./bootstrap.sh fixtures              # the generated fixture repos (B3, B3b)
 #   ./bootstrap.sh datasets              # SWE-bench Lite + Verified, ContextBench (B5)
 #   ./bootstrap.sh data                  # the published answer keys and results (GitHub release data-v1)
+#   ./bootstrap.sh data2                 # B11 answer keys and the B11/B7 results (GitHub release data-v2)
 set -euo pipefail
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/bench/env.sh"
 cd "$ROOT"
@@ -42,6 +43,8 @@ pipeshub() {
     mapfile -t refs < <(python3 -c 'import tomllib;p=tomllib.load(open(__import__("os").environ["PINS"],"rb"))["pipeshub"];print("\n".join(sorted({v for k,v in p.items() if len(v)==9 and all(c in "0123456789abcdef" for c in v)})))')
   fi
   for ref in "${refs[@]}"; do
+    # B7/B11 pins are on upstream main, not on the fork's backup branch: fetch it when a pin is missing.
+    git -C "$base" cat-file -e "$ref^{commit}" 2>/dev/null || git -C "$base" fetch -q "$(pin pipeshub upstream)" main
     [ -d "$WORK/pipeshub@$ref" ] || git -C "$base" worktree add -q --detach "$WORK/pipeshub@$ref" "$ref"
     echo "pipeshub@$ref ready"
   done
@@ -152,9 +155,18 @@ data() {
   cd "$ROOT"
 }
 
+data2() {  # release data-v2: B11 answer keys + B11/B7 results
+  local tag=${DATA2_TAG:-data-v2} repo=${DATA_REPO:-pipeshub-ai/codegraph-bench}
+  mkdir -p "$WORK/data-v2" && cd "$WORK/data-v2"
+  fetch "$repo" "$tag" SHA256SUMS MANIFEST.md truth-b11.tar.gz b11-reports.tar.gz b7-reports.tar.gz
+  sha256sum -c SHA256SUMS
+  tar -xzf truth-b11.tar.gz -C "$ROOT"     # bench/truth/vscode, bench/truth/django32 : the B11 answer keys
+  cd "$ROOT"
+}
+
 case "${1:-}" in
   smoke)    pipeshub "$(pin pipeshub b1)"; subjects requests; tools; scip ;;
   all)      pipeshub; subjects; tools; scip; fixtures; datasets ;;
-  pipeshub|subjects|tools|scip|fixtures|datasets|data) f=$1; shift; "$f" "$@" ;;
+  pipeshub|subjects|tools|scip|fixtures|datasets|data|data2) f=$1; shift; "$f" "$@" ;;
   *) sed -n '2,15p' "$0"; exit 1 ;;
 esac

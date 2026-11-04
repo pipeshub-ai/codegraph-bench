@@ -158,6 +158,8 @@ def norm(name: str) -> str:
     name = re.sub(r"#\d+", "", name.strip().strip("`").replace("()", "")).replace("#", ".")
     path, sep, q = name.partition("::")
     q = re.sub(r"^(function|method|class|func):", "", q.strip())
+    # A TS/JS constructor: `C.constructor` in the source and PipesHub, `C.<constructor>` in SCIP.
+    q = re.sub(r"\.constructor$", ".<constructor>", q)
     return f"{path.strip().lstrip('./')}{sep}{q}"
 
 
@@ -220,7 +222,7 @@ def canon(name: str, known: set[str]) -> str:
 def score_one(q: dict, r: dict, out: dict, files: set[str]) -> dict:
     known = set(out) | {b for targets in out.values() for b in targets}
     got = {canon(n, known) for n in map(norm, r["submitted"]["answer"]) if n.partition("::")[0] in files}
-    if q["kind"] == "path":
+    if q["kind"] in ("path", "path8"):
         chain = [canon(norm(a), known) for a in r["submitted"]["answer"]]
         ok = len(chain) >= 2 and chain[0] == q["target"] and chain[-1] == q["to"] and all(
             b in out.get(a, ()) for a, b in zip(chain, chain[1:]))
@@ -233,6 +235,13 @@ def score_one(q: dict, r: dict, out: dict, files: set[str]) -> dict:
         j = json.loads(cache.read_text())
         return {"judge": j.get("score"), "invented": len(j.get("invented") or []),
                 **prf(got, set(q["answer"]))}
+    if q.get("level") in ("medium", "tough"):
+        # B11: recall against what an answer must name, precision against everything that is right.
+        must, right = set(q["answer"]), set(q["answer"]) | set(q.get("accept") or ())
+        recall = len(got & must) / len(must) if must else float(not got)
+        precision = len(got & right) / len(got) if got else float(not must)
+        f1 = 2 * precision * recall / (precision + recall) if precision + recall else 0.0
+        return {"precision": precision, "recall": recall, "f1": f1, "exact": float(must <= got <= right)}
     s = prf(got, set(q["answer"]))
     if q["kind"] == "negative":
         s["correct"] = not got

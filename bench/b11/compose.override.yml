@@ -1,0 +1,26 @@
+# B11: the pinned PipesHub commit on local Docker Compose, beside other stacks on the same machine.
+# Own image tag, host ports bound to localhost only, Neo4j bolt published for keep_acl.sh,
+# and the code sandbox left off (the agents only read code).
+services:
+  pipeshub-ai:
+    image: pipeshub-ai:cg-b11
+    ports: !override
+      - "127.0.0.1:3960:3000"
+    depends_on: !override
+      qdrant:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      mongodb:
+        condition: service_healthy
+      neo4j:
+        condition: service_healthy
+  docker-socket-proxy:
+    image: pipeshub-ai:cg-b11
+    profiles: ["off"]
+  sandbox-image:
+    profiles: ["off"]
+  neo4j:
+    ports:
+      - "127.0.0.1:47697:7687"
+      - "127.0.0.1:47484:7474"

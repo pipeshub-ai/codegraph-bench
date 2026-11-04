@@ -5,6 +5,7 @@
 # All code-under-test commits are on the public fork's branch below (the PR's history before it was squashed).
 repo   = "https://github.com/tushar1245/pipeshub-ai"
 branch = "backup/code-graph-pre-squash-2026-10-21"
+upstream = "https://github.com/pipeshub-ai/pipeshub-ai"   # B7/B11 pins below are on its main branch
 # Which commit produced which published number. Evidence: report file times against the commit times of the
 # worktree the harness imported (PIPESHUB_PY); see AGENTS.md "Provenance".
 b1            = "6c6e29ab5"   # B1 PipesHub rows, all 9 repositories (reproduced exactly from a clean clone). Measured 2026-10-19 on the
@@ -18,6 +19,12 @@ b5a           = "f9a196bfc"   # B5a Lite/Verified no-LLM ranking and graph v2 re
 b5b_search    = "f9a196bfc"   # B5b search-only arm (2026-10-18)
 b5b_graph     = "4b3b974b7"   # B5b graph arm rerun without the stale-graph warning (2026-10-20)
 b5c           = "4b3b974b7"   # ContextBench retrieval and agent tiers (harness default PIPESHUB_PY on 2026-10-20/21; see AGENTS.md)
+b11           = "PENDING"     # B11 PipesHub arm: main with #5106 (wider text search, unlinked call sites, the
+                              # constructor path rule), #5352 (the no-path note) and #5353 (missing-path listing).
+                              # Set when #5352 merges. Published numbers: an experiment build with the same
+                              # behaviour behind switches; see AGENTS.md "Provenance" for B11
+b7            = "0b33bc842"   # B7 (Kafka): image built 2026-10-21 05:17 from the code-graph PR's tree, whose last
+                              # commit was this one (inferred from the times; the tree is not kept)
 python        = "3.12.3"
 install       = "python3.12 -m venv venv && venv/bin/pip install uv && venv/bin/uv pip install -e . && venv/bin/uv pip install -r <bench>/requirements-bench.txt"
 
@@ -58,3 +65,24 @@ contextbench      = { git = "https://github.com/anonymousUser2026/ContextBench",
 [models]   # names only; keys go in models.json (models.example.json)
 llm_1       = "gpt-5.6-luna (Azure OpenAI)"   # B3 PipesHub LLM, B5b and B5c agents
 embedding_1 = "text-embedding-3-small (Azure OpenAI)"   # B3 embeddings, B5a/B5c dense retrieval
+
+[b11]   # reference: what bench/b11/snapshot.sh rebuilds and what the runs used
+vscode_repo      = "https://github.com/microsoft/vscode"
+vscode_commit    = "3ac0f0563e382d8e3480c787d04a2d05afca6746"   # src/vs/{base,editor,platform} as vs/
+vscode_tree      = "040e9b2ba651af6895b89134800139555d88effa"   # git tree of the snapshot as indexed
+django_repo      = "https://github.com/django/django"
+django_commit    = "b6475d7d7940f3ce575e0b0f2d83e517f899b4cf"   # tag 3.2, the django/ package
+django_tree      = "770db1dd1075cddd99c4a4b3f1c5dba51c5ae893"
+claude_code      = "2.1.318"     # headless CLI as of the last runs (2026-11-03); runs 2026-11-01..03 used the then-current releases
+models           = "claude-haiku-5-5, claude-sonnet-5-5, claude-opus-5-5 (CLI aliases haiku, sonnet, opus)"
+graphify         = "graphifyy==0.9.92"   # graphs built with `graphify update . --no-cluster`, its README's rules and hooks
+
+[b7]    # reference: Kafka
+kafka_repo       = "https://github.com/apache/kafka"
+kafka_commit     = "9fbcd3f76cecd04015e5d893976d9849f407af30"   # docs/ held back for the second stage
+jira             = "https://issues.apache.org/jira, project KAFKA, issues created since 2022-01-01"
+confluence       = "https://cwiki.apache.org/confluence, space KAFKA, pages only"
+docs_site        = "https://kafka.apache.org/43/ (Kafka 4.3 docs, 170 pages)"
+claude_code_model = "claude-sonnet-5-5"
+pipeshub_agent_model = "gpt-5.6-luna (llm_1)"
+judges           = "claude-sonnet-5-5 (llm_judge), gpt-6 (llm_2)"

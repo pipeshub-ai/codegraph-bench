@@ -10,6 +10,8 @@
 #   bench/run.sh b3                        live GitHub sync + 7 steps x 3 + crash recovery (needs a GitHub token)
 #   bench/run.sh b3b                       incremental vs fresh builds on the fixture, 4 tools
 #   bench/run.sh b5a | b5b | b5c           SWE-bench ranking (no LLM) | SWE-bench agent | ContextBench
+#   bench/run.sh b11                       VS Code + Django, 300 questions each, Claude Code x 3 setups x 3 models (stack: bench/b11)
+#   bench/run.sh b7                        Kafka: Claude Code and PipesHub's agent, with and without the knowledge (stack: bench/b7)
 #   bench/run.sh verify [bench ...]        compare reports/ with expected/ (see verify.py)
 set -uo pipefail
 HERE=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
@@ -46,6 +48,8 @@ case $cmd in
   b5c)
     use b5c; cd "$HERE/contextbench"
     ./clone_repos.sh && ./run_retrieve.sh && ./run_agent.sh search && ./run_agent.sh graph && "$PY" -u score_by_repo.py ;;
+  b11)  use b11; exec "$HERE/run_b11.sh" "$@" ;;
+  b7)   use b7;  exec "$HERE/run_b7v2.sh" "$@" ;;
   verify)   exec python3 "$HERE/../verify.py" "$@" ;;
-  *) sed -n '2,13p' "$0"; exit 1 ;;
+  *) sed -n '2,15p' "$0"; exit 1 ;;
 esac

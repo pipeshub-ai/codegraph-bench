@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[2]
 BENCH = ROOT / "bench"
 OUT = ROOT / "reports" / "b4"
-REPOS = {"requests": "requests", "django": "django", "gin": "gin", "guava": "guava"}
+REPOS = {"requests": "requests", "django": "django", "gin": "gin", "guava": "guava", "client-go": "client-go", "excalidraw": "excalidraw", "vscode": "vscode"}
 MIX = {"callers": 7, "callees": 4, "impact": 3, "path": 3, "negative": 3, "explain": 5}
 
 

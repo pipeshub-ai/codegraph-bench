@@ -1,7 +1,7 @@
 """Compare what a reproduction produced (reports/) with the published numbers (expected/reports/).
 
   python3 verify.py                 # every benchmark that has produced files
-  python3 verify.py b1 b3b          # only these (b1 b2 b2-speed b2-tools b3 b3b b5a b5b contextbench)
+  python3 verify.py b1 b3b          # only these (b1 b2 b2-speed b2-tools b3 b3b b5a b5b contextbench b11 b7)
 
 Every expected file is matched with the same path under reports/. Numbers are compared leaf by leaf with the
 benchmark's tolerance below; a file not produced yet is listed as "not run", not as a failure. Exit status 1
@@ -31,6 +31,11 @@ RULES = {
     "b5a": (0.5, 0.0, r"acc@|recall@", r"$^"),             # embeddings are an API call: tiny drift
     "b5b": (2.0, 0.0, r"acc@", r"$^"),                      # an LLM agent: run-to-run noise
     "contextbench": (0.01, 0.0, r"final_|num_valid", r"traj"),  # coverage/precision as fractions; agent sets drift more
+    # Claude Code answering 300 questions: identical runs differed by up to 2 points, and the model behind an
+    # alias moves; accuracy per setup overall and per question kind, not tokens, time or cost.
+    "b11": (0.03, 0.0, r"^all:all/[a-z]+/score$", r"$^"),
+    "b11-kind": (0.08, 0.0, r"^kind:[a-z0-9]+/[a-z]+/score$", r"$^"),  # 9-100 questions a kind
+    "b7v2": (0.05, 0.0, r"^[a-z-]+/acc_judge_[ab]$", r"$^"),  # 90 questions, LLM judges
 }
 
 
@@ -73,7 +78,9 @@ def main(only: list[str]) -> int:
         if not exp.is_file():
             continue
         bench = exp.relative_to(EXPECTED).parts[0]
-        alias = {"b1-v2": "b1", "contextbench": "b5c"}
+        alias = {"b1-v2": "b1", "contextbench": "b5c", "b7v2": "b7"}
+        if bench.startswith("b11-"):  # one folder per codebase and model
+            alias[bench], bench = "b11", "b11"
         if only and bench not in only and alias.get(bench) not in only:
             continue
         got_path = produced_for(exp)
@@ -83,12 +90,14 @@ def main(only: list[str]) -> int:
             continue
         got = produced_b2_tools(got_path) if bench == "b2-tools" else load(got_path)
         want = load(exp)
-        atol, rtol, inc, exc = RULES[bench]
+        rules = [RULES[bench]] + ([RULES["b11-kind"]] if bench == "b11" else [])
         g = dict(leaves(got))
         fails, checked = [], 0
         for path, w in leaves(want):
-            if not re.search(inc, path) or re.search(exc, path):
+            rule = next((r for r in rules if re.search(r[2], path) and not re.search(r[3], path)), None)
+            if rule is None:
                 continue
+            atol, rtol = rule[0], rule[1]
             if path not in g:
                 continue  # a field the produced run does not write is not a mismatch of its numbers
             checked += 1

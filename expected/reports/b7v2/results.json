@@ -1,0 +1,1448 @@
+{
+ "agent-code-only": {
+  "n": 90,
+  "acc_judge_a": 0.633,
+  "ci_judge_a": [
+   0.53,
+   0.726
+  ],
+  "mean_judge_a": 0.756,
+  "acc_judge_b": 0.589,
+  "ci_judge_b": [
+   0.486,
+   0.685
+  ],
+  "mean_judge_b": 0.789,
+  "acc_strict": 0.589,
+  "ci_strict": [
+   0.486,
+   0.685
+  ],
+  "mean_strict": 0.733,
+  "fact_recall": 0.65,
+  "mean_seconds": 44.643,
+  "median_seconds": 30.4,
+  "mean_tool_calls": 11.222,
+  "median_tool_calls": 7.0,
+  "mean_mcp_calls": 10.556,
+  "median_mcp_calls": 7.0,
+  "mean_input_tokens": null,
+  "median_input_tokens": null,
+  "mean_output_tokens": null,
+  "median_output_tokens": null,
+  "mean_cost_usd": null,
+  "median_cost_usd": null,
+  "by_type": {
+   "code": {
+    "n": 10,
+    "acc_judge_a": 1.0,
+    "ci_judge_a": [
+     0.722,
+     1.0
+    ],
+    "mean_judge_a": 1.0,
+    "acc_judge_b": 1.0,
+    "ci_judge_b": [
+     0.722,
+     1.0
+    ],
+    "mean_judge_b": 1.0,
+    "acc_strict": 1.0,
+    "ci_strict": [
+     0.722,
+     1.0
+    ],
+    "mean_strict": 1.0,
+    "fact_recall": 1.0,
+    "mean_seconds": 13.6,
+    "median_seconds": 12.7,
+    "mean_tool_calls": 3.8,
+    "median_tool_calls": 3.0,
+    "mean_mcp_calls": 3.6,
+    "median_mcp_calls": 3.0,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   },
+   "docs": {
+    "n": 20,
+    "acc_judge_a": 0.65,
+    "ci_judge_a": [
+     0.433,
+     0.819
+    ],
+    "mean_judge_a": 0.8,
+    "acc_judge_b": 0.55,
+    "ci_judge_b": [
+     0.342,
+     0.742
+    ],
+    "mean_judge_b": 0.75,
+    "acc_strict": 0.55,
+    "ci_strict": [
+     0.342,
+     0.742
+    ],
+    "mean_strict": 0.75,
+    "fact_recall": 0.608,
+    "mean_seconds": 28.525,
+    "median_seconds": 25.0,
+    "mean_tool_calls": 7.0,
+    "median_tool_calls": 6.5,
+    "mean_mcp_calls": 7.0,
+    "median_mcp_calls": 6.5,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   },
+   "jira": {
+    "n": 25,
+    "acc_judge_a": 0.12,
+    "ci_judge_a": [
+     0.042,
+     0.3
+    ],
+    "mean_judge_a": 0.4,
+    "acc_judge_b": 0.12,
+    "ci_judge_b": [
+     0.042,
+     0.3
+    ],
+    "mean_judge_b": 0.56,
+    "acc_strict": 0.12,
+    "ci_strict": [
+     0.042,
+     0.3
+    ],
+    "mean_strict": 0.4,
+    "fact_recall": 0.36,
+    "mean_seconds": 90.588,
+    "median_seconds": 89.6,
+    "mean_tool_calls": 23.84,
+    "median_tool_calls": 20,
+    "mean_mcp_calls": 22.64,
+    "median_mcp_calls": 20,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   },
+   "kip": {
+    "n": 25,
+    "acc_judge_a": 0.88,
+    "ci_judge_a": [
+     0.7,
+     0.958
+    ],
+    "mean_judge_a": 0.9,
+    "acc_judge_b": 0.8,
+    "ci_judge_b": [
+     0.609,
+     0.911
+    ],
+    "mean_judge_b": 0.9,
+    "acc_strict": 0.8,
+    "ci_strict": [
+     0.609,
+     0.911
+    ],
+    "mean_strict": 0.86,
+    "fact_recall": 0.787,
+    "mean_seconds": 31.504,
+    "median_seconds": 26.4,
+    "mean_tool_calls": 6.32,
+    "median_tool_calls": 6,
+    "mean_mcp_calls": 5.52,
+    "median_mcp_calls": 5,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   },
+   "multi": {
+    "n": 10,
+    "acc_judge_a": 0.9,
+    "ci_judge_a": [
+     0.596,
+     0.982
+    ],
+    "mean_judge_a": 0.95,
+    "acc_judge_b": 0.9,
+    "ci_judge_b": [
+     0.596,
+     0.982
+    ],
+    "mean_judge_b": 0.95,
+    "acc_strict": 0.9,
+    "ci_strict": [
+     0.596,
+     0.982
+    ],
+    "mean_strict": 0.95,
+    "fact_recall": 0.767,
+    "mean_seconds": 25.91,
+    "median_seconds": 20.9,
+    "mean_tool_calls": 7.8,
+    "median_tool_calls": 5.5,
+    "mean_mcp_calls": 7.0,
+    "median_mcp_calls": 5.0,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   }
+  }
+ },
+ "agent-with-company": {
+  "n": 90,
+  "acc_judge_a": 0.956,
+  "ci_judge_a": [
+   0.891,
+   0.983
+  ],
+  "mean_judge_a": 0.972,
+  "acc_judge_b": 0.911,
+  "ci_judge_b": [
+   0.834,
+   0.954
+  ],
+  "mean_judge_b": 0.956,
+  "acc_strict": 0.9,
+  "ci_strict": [
+   0.821,
+   0.946
+  ],
+  "mean_strict": 0.944,
+  "fact_recall": 0.815,
+  "mean_seconds": 25.377,
+  "median_seconds": 23.1,
+  "mean_tool_calls": 5.156,
+  "median_tool_calls": 5.0,
+  "mean_mcp_calls": 5.078,
+  "median_mcp_calls": 5.0,
+  "mean_input_tokens": null,
+  "median_input_tokens": null,
+  "mean_output_tokens": null,
+  "median_output_tokens": null,
+  "mean_cost_usd": null,
+  "median_cost_usd": null,
+  "by_type": {
+   "code": {
+    "n": 10,
+    "acc_judge_a": 1.0,
+    "ci_judge_a": [
+     0.722,
+     1.0
+    ],
+    "mean_judge_a": 1.0,
+    "acc_judge_b": 1.0,
+    "ci_judge_b": [
+     0.722,
+     1.0
+    ],
+    "mean_judge_b": 1.0,
+    "acc_strict": 1.0,
+    "ci_strict": [
+     0.722,
+     1.0
+    ],
+    "mean_strict": 1.0,
+    "fact_recall": 1.0,
+    "mean_seconds": 18.48,
+    "median_seconds": 14.9,
+    "mean_tool_calls": 3.6,
+    "median_tool_calls": 3.0,
+    "mean_mcp_calls": 3.6,
+    "median_mcp_calls": 3.0,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   },
+   "docs": {
+    "n": 20,
+    "acc_judge_a": 0.9,
+    "ci_judge_a": [
+     0.699,
+     0.972
+    ],
+    "mean_judge_a": 0.95,
+    "acc_judge_b": 0.8,
+    "ci_judge_b": [
+     0.584,
+     0.919
+    ],
+    "mean_judge_b": 0.9,
+    "acc_strict": 0.8,
+    "ci_strict": [
+     0.584,
+     0.919
+    ],
+    "mean_strict": 0.9,
+    "fact_recall": 0.758,
+    "mean_seconds": 27.615,
+    "median_seconds": 27.4,
+    "mean_tool_calls": 5.6,
+    "median_tool_calls": 5.5,
+    "mean_mcp_calls": 5.55,
+    "median_mcp_calls": 5.5,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   },
+   "jira": {
+    "n": 25,
+    "acc_judge_a": 0.96,
+    "ci_judge_a": [
+     0.805,
+     0.993
+    ],
+    "mean_judge_a": 0.98,
+    "acc_judge_b": 0.96,
+    "ci_judge_b": [
+     0.805,
+     0.993
+    ],
+    "mean_judge_b": 0.98,
+    "acc_strict": 0.92,
+    "ci_strict": [
+     0.75,
+     0.978
+    ],
+    "mean_strict": 0.96,
+    "fact_recall": 0.867,
+    "mean_seconds": 26.956,
+    "median_seconds": 22.8,
+    "mean_tool_calls": 5.48,
+    "median_tool_calls": 6,
+    "mean_mcp_calls": 5.32,
+    "median_mcp_calls": 5,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   },
+   "kip": {
+    "n": 25,
+    "acc_judge_a": 0.96,
+    "ci_judge_a": [
+     0.805,
+     0.993
+    ],
+    "mean_judge_a": 0.96,
+    "acc_judge_b": 0.88,
+    "ci_judge_b": [
+     0.7,
+     0.958
+    ],
+    "mean_judge_b": 0.94,
+    "acc_strict": 0.88,
+    "ci_strict": [
+     0.7,
+     0.958
+    ],
+    "mean_strict": 0.92,
+    "fact_recall": 0.747,
+    "mean_seconds": 24.612,
+    "median_seconds": 21.7,
+    "mean_tool_calls": 4.92,
+    "median_tool_calls": 6,
+    "mean_mcp_calls": 4.84,
+    "median_mcp_calls": 5,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   },
+   "multi": {
+    "n": 10,
+    "acc_judge_a": 1.0,
+    "ci_judge_a": [
+     0.722,
+     1.0
+    ],
+    "mean_judge_a": 1.0,
+    "acc_judge_b": 1.0,
+    "ci_judge_b": [
+     0.722,
+     1.0
+    ],
+    "mean_judge_b": 1.0,
+    "acc_strict": 1.0,
+    "ci_strict": [
+     0.722,
+     1.0
+    ],
+    "mean_strict": 1.0,
+    "fact_recall": 0.783,
+    "mean_seconds": 25.76,
+    "median_seconds": 24.3,
+    "mean_tool_calls": 5.6,
+    "median_tool_calls": 6.0,
+    "mean_mcp_calls": 5.6,
+    "median_mcp_calls": 6.0,
+    "mean_input_tokens": null,
+    "median_input_tokens": null,
+    "mean_output_tokens": null,
+    "median_output_tokens": null,
+    "mean_cost_usd": null,
+    "median_cost_usd": null
+   }
+  }
+ },
+ "cc-dump": {
+  "n": 180,
+  "acc_judge_a": 0.972,
+  "ci_judge_a": [
+   0.937,
+   0.988
+  ],
+  "mean_judge_a": 0.986,
+  "acc_judge_b": 0.944,
+  "ci_judge_b": [
+   0.901,
+   0.97
+  ],
+  "mean_judge_b": 0.972,
+  "acc_strict": 0.939,
+  "ci_strict": [
+   0.894,
+   0.966
+  ],
+  "mean_strict": 0.969,
+  "fact_recall": 0.925,
+  "mean_seconds": 17.803,
+  "median_seconds": 16.9,
+  "mean_tool_calls": 4.822,
+  "median_tool_calls": 4.0,
+  "mean_mcp_calls": 0.0,
+  "median_mcp_calls": 0.0,
+  "mean_input_tokens": 46474.061,
+  "median_input_tokens": 40606.0,
+  "mean_output_tokens": 1539.828,
+  "median_output_tokens": 1416.5,
+  "mean_cost_usd": 0.044,
+  "median_cost_usd": 0.0,
+  "by_type": {
+   "code": {
+    "n": 20,
+    "acc_judge_a": 0.95,
+    "ci_judge_a": [
+     0.764,
+     0.991
+    ],
+    "mean_judge_a": 0.975,
+    "acc_judge_b": 0.95,
+    "ci_judge_b": [
+     0.764,
+     0.991
+    ],
+    "mean_judge_b": 0.975,
+    "acc_strict": 0.95,
+    "ci_strict": [
+     0.764,
+     0.991
+    ],
+    "mean_strict": 0.975,
+    "fact_recall": 1.0,
+    "mean_seconds": 12.7,
+    "median_seconds": 11.8,
+    "mean_tool_calls": 2.55,
+    "median_tool_calls": 2.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 30212.35,
+    "median_input_tokens": 31557.0,
+    "mean_output_tokens": 900.45,
+    "median_output_tokens": 670.0,
+    "mean_cost_usd": 0.03,
+    "median_cost_usd": 0.0
+   },
+   "docs": {
+    "n": 40,
+    "acc_judge_a": 0.975,
+    "ci_judge_a": [
+     0.871,
+     0.996
+    ],
+    "mean_judge_a": 0.988,
+    "acc_judge_b": 1.0,
+    "ci_judge_b": [
+     0.912,
+     1.0
+    ],
+    "mean_judge_b": 1.0,
+    "acc_strict": 0.975,
+    "ci_strict": [
+     0.871,
+     0.996
+    ],
+    "mean_strict": 0.988,
+    "fact_recall": 0.938,
+    "mean_seconds": 17.997,
+    "median_seconds": 16.8,
+    "mean_tool_calls": 4.775,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 50796.45,
+    "median_input_tokens": 41603.5,
+    "mean_output_tokens": 1603.775,
+    "median_output_tokens": 1455.0,
+    "mean_cost_usd": 0.047,
+    "median_cost_usd": 0.0
+   },
+   "jira": {
+    "n": 50,
+    "acc_judge_a": 0.96,
+    "ci_judge_a": [
+     0.865,
+     0.989
+    ],
+    "mean_judge_a": 0.98,
+    "acc_judge_b": 0.92,
+    "ci_judge_b": [
+     0.812,
+     0.968
+    ],
+    "mean_judge_b": 0.96,
+    "acc_strict": 0.92,
+    "ci_strict": [
+     0.812,
+     0.968
+    ],
+    "mean_strict": 0.96,
+    "fact_recall": 0.933,
+    "mean_seconds": 17.64,
+    "median_seconds": 17.1,
+    "mean_tool_calls": 4.84,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 47007.72,
+    "median_input_tokens": 42724.0,
+    "mean_output_tokens": 1397.34,
+    "median_output_tokens": 1288.0,
+    "mean_cost_usd": 0.041,
+    "median_cost_usd": 0.0
+   },
+   "kip": {
+    "n": 50,
+    "acc_judge_a": 0.98,
+    "ci_judge_a": [
+     0.895,
+     0.996
+    ],
+    "mean_judge_a": 0.99,
+    "acc_judge_b": 0.96,
+    "ci_judge_b": [
+     0.865,
+     0.989
+    ],
+    "mean_judge_b": 0.98,
+    "acc_strict": 0.96,
+    "ci_strict": [
+     0.865,
+     0.989
+    ],
+    "mean_strict": 0.98,
+    "fact_recall": 0.9,
+    "mean_seconds": 19.628,
+    "median_seconds": 18.4,
+    "mean_tool_calls": 5.56,
+    "median_tool_calls": 5.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 49377.7,
+    "median_input_tokens": 45882.0,
+    "mean_output_tokens": 1812.8,
+    "median_output_tokens": 1657.5,
+    "mean_cost_usd": 0.048,
+    "median_cost_usd": 0.0
+   },
+   "multi": {
+    "n": 20,
+    "acc_judge_a": 1.0,
+    "ci_judge_a": [
+     0.839,
+     1.0
+    ],
+    "mean_judge_a": 1.0,
+    "acc_judge_b": 0.85,
+    "ci_judge_b": [
+     0.64,
+     0.948
+    ],
+    "mean_judge_b": 0.925,
+    "acc_strict": 0.85,
+    "ci_strict": [
+     0.64,
+     0.948
+    ],
+    "mean_strict": 0.925,
+    "fact_recall": 0.867,
+    "mean_seconds": 18.36,
+    "median_seconds": 17.1,
+    "mean_tool_calls": 5.3,
+    "median_tool_calls": 5.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 45497.75,
+    "median_input_tokens": 43187.0,
+    "mean_output_tokens": 1725.1,
+    "median_output_tokens": 1510.5,
+    "mean_cost_usd": 0.045,
+    "median_cost_usd": 0.0
+   }
+  }
+ },
+ "cc-graphify": {
+  "n": 180,
+  "acc_judge_a": 0.606,
+  "ci_judge_a": [
+   0.533,
+   0.674
+  ],
+  "mean_judge_a": 0.706,
+  "acc_judge_b": 0.55,
+  "ci_judge_b": [
+   0.477,
+   0.621
+  ],
+  "mean_judge_b": 0.703,
+  "acc_strict": 0.544,
+  "ci_strict": [
+   0.472,
+   0.616
+  ],
+  "mean_strict": 0.669,
+  "fact_recall": 0.644,
+  "mean_seconds": 66.651,
+  "median_seconds": 61.1,
+  "mean_tool_calls": 5.317,
+  "median_tool_calls": 4.0,
+  "mean_mcp_calls": 0.0,
+  "median_mcp_calls": 0.0,
+  "mean_input_tokens": 97385.489,
+  "median_input_tokens": 87829.0,
+  "mean_output_tokens": 1674.883,
+  "median_output_tokens": 1473.5,
+  "mean_cost_usd": 0.058,
+  "median_cost_usd": 0.1,
+  "by_type": {
+   "code": {
+    "n": 20,
+    "acc_judge_a": 0.95,
+    "ci_judge_a": [
+     0.764,
+     0.991
+    ],
+    "mean_judge_a": 0.975,
+    "acc_judge_b": 0.85,
+    "ci_judge_b": [
+     0.64,
+     0.948
+    ],
+    "mean_judge_b": 0.925,
+    "acc_strict": 0.85,
+    "ci_strict": [
+     0.64,
+     0.948
+    ],
+    "mean_strict": 0.925,
+    "fact_recall": 0.975,
+    "mean_seconds": 48.53,
+    "median_seconds": 45.5,
+    "mean_tool_calls": 2.6,
+    "median_tool_calls": 2.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 53170.75,
+    "median_input_tokens": 47305.0,
+    "mean_output_tokens": 760.3,
+    "median_output_tokens": 597.5,
+    "mean_cost_usd": 0.035,
+    "median_cost_usd": 0.0
+   },
+   "docs": {
+    "n": 40,
+    "acc_judge_a": 0.75,
+    "ci_judge_a": [
+     0.598,
+     0.858
+    ],
+    "mean_judge_a": 0.825,
+    "acc_judge_b": 0.725,
+    "ci_judge_b": [
+     0.572,
+     0.839
+    ],
+    "mean_judge_b": 0.838,
+    "acc_strict": 0.725,
+    "ci_strict": [
+     0.572,
+     0.839
+    ],
+    "mean_strict": 0.812,
+    "fact_recall": 0.575,
+    "mean_seconds": 71.685,
+    "median_seconds": 70.0,
+    "mean_tool_calls": 5.1,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 93153.25,
+    "median_input_tokens": 78432.0,
+    "mean_output_tokens": 1721.55,
+    "median_output_tokens": 1590.5,
+    "mean_cost_usd": 0.058,
+    "median_cost_usd": 0.1
+   },
+   "jira": {
+    "n": 50,
+    "acc_judge_a": 0.0,
+    "ci_judge_a": [
+     0.0,
+     0.071
+    ],
+    "mean_judge_a": 0.2,
+    "acc_judge_b": 0.0,
+    "ci_judge_b": [
+     0.0,
+     0.071
+    ],
+    "mean_judge_b": 0.26,
+    "acc_strict": 0.0,
+    "ci_strict": [
+     0.0,
+     0.071
+    ],
+    "mean_strict": 0.18,
+    "fact_recall": 0.303,
+    "mean_seconds": 71.258,
+    "median_seconds": 63.0,
+    "mean_tool_calls": 7.52,
+    "median_tool_calls": 7.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 134123.94,
+    "median_input_tokens": 112134.5,
+    "mean_output_tokens": 2138.22,
+    "median_output_tokens": 1857.5,
+    "mean_cost_usd": 0.069,
+    "median_cost_usd": 0.1
+   },
+   "kip": {
+    "n": 50,
+    "acc_judge_a": 0.9,
+    "ci_judge_a": [
+     0.786,
+     0.957
+    ],
+    "mean_judge_a": 0.94,
+    "acc_judge_b": 0.82,
+    "ci_judge_b": [
+     0.692,
+     0.902
+    ],
+    "mean_judge_b": 0.91,
+    "acc_strict": 0.8,
+    "ci_strict": [
+     0.67,
+     0.888
+    ],
+    "mean_strict": 0.89,
+    "fact_recall": 0.847,
+    "mean_seconds": 65.096,
+    "median_seconds": 60.6,
+    "mean_tool_calls": 4.5,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 82965.26,
+    "median_input_tokens": 79825.0,
+    "mean_output_tokens": 1585.06,
+    "median_output_tokens": 1464.5,
+    "mean_cost_usd": 0.056,
+    "median_cost_usd": 0.1
+   },
+   "multi": {
+    "n": 20,
+    "acc_judge_a": 0.75,
+    "ci_judge_a": [
+     0.531,
+     0.888
+    ],
+    "mean_judge_a": 0.875,
+    "acc_judge_b": 0.6,
+    "ci_judge_b": [
+     0.387,
+     0.781
+    ],
+    "mean_judge_b": 0.8,
+    "acc_strict": 0.6,
+    "ci_strict": [
+     0.387,
+     0.781
+    ],
+    "mean_strict": 0.8,
+    "fact_recall": 0.792,
+    "mean_seconds": 67.075,
+    "median_seconds": 70.7,
+    "mean_tool_calls": 5.0,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 94269.15,
+    "median_input_tokens": 92206.0,
+    "mean_output_tokens": 1562.35,
+    "median_output_tokens": 1353.0,
+    "mean_cost_usd": 0.056,
+    "median_cost_usd": 0.1
+   }
+  }
+ },
+ "cc-pipeshub": {
+  "n": 180,
+  "acc_judge_a": 0.933,
+  "ci_judge_a": [
+   0.887,
+   0.961
+  ],
+  "mean_judge_a": 0.958,
+  "acc_judge_b": 0.9,
+  "ci_judge_b": [
+   0.847,
+   0.936
+  ],
+  "mean_judge_b": 0.944,
+  "acc_strict": 0.9,
+  "ci_strict": [
+   0.847,
+   0.936
+  ],
+  "mean_strict": 0.942,
+  "fact_recall": 0.902,
+  "mean_seconds": 21.237,
+  "median_seconds": 16.0,
+  "mean_tool_calls": 4.189,
+  "median_tool_calls": 4.0,
+  "mean_mcp_calls": 1.894,
+  "median_mcp_calls": 2.0,
+  "mean_input_tokens": 95265.6,
+  "median_input_tokens": 85319.0,
+  "mean_output_tokens": 1386.422,
+  "median_output_tokens": 1337.5,
+  "mean_cost_usd": 0.059,
+  "median_cost_usd": 0.1,
+  "by_type": {
+   "code": {
+    "n": 20,
+    "acc_judge_a": 0.95,
+    "ci_judge_a": [
+     0.764,
+     0.991
+    ],
+    "mean_judge_a": 0.975,
+    "acc_judge_b": 0.9,
+    "ci_judge_b": [
+     0.699,
+     0.972
+    ],
+    "mean_judge_b": 0.95,
+    "acc_strict": 0.9,
+    "ci_strict": [
+     0.699,
+     0.972
+    ],
+    "mean_strict": 0.95,
+    "fact_recall": 0.975,
+    "mean_seconds": 11.44,
+    "median_seconds": 10.3,
+    "mean_tool_calls": 2.5,
+    "median_tool_calls": 2.0,
+    "mean_mcp_calls": 0.05,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 70459.45,
+    "median_input_tokens": 62293.5,
+    "mean_output_tokens": 920.7,
+    "median_output_tokens": 629.0,
+    "mean_cost_usd": 0.036,
+    "median_cost_usd": 0.0
+   },
+   "docs": {
+    "n": 40,
+    "acc_judge_a": 0.9,
+    "ci_judge_a": [
+     0.769,
+     0.96
+    ],
+    "mean_judge_a": 0.95,
+    "acc_judge_b": 0.85,
+    "ci_judge_b": [
+     0.709,
+     0.929
+    ],
+    "mean_judge_b": 0.925,
+    "acc_strict": 0.85,
+    "ci_strict": [
+     0.709,
+     0.929
+    ],
+    "mean_strict": 0.925,
+    "fact_recall": 0.904,
+    "mean_seconds": 24.44,
+    "median_seconds": 17.0,
+    "mean_tool_calls": 4.275,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 2.5,
+    "median_mcp_calls": 2.0,
+    "mean_input_tokens": 99960.075,
+    "median_input_tokens": 89718.0,
+    "mean_output_tokens": 1518.45,
+    "median_output_tokens": 1490.5,
+    "mean_cost_usd": 0.063,
+    "median_cost_usd": 0.1
+   },
+   "jira": {
+    "n": 50,
+    "acc_judge_a": 0.9,
+    "ci_judge_a": [
+     0.786,
+     0.957
+    ],
+    "mean_judge_a": 0.92,
+    "acc_judge_b": 0.84,
+    "ci_judge_b": [
+     0.715,
+     0.917
+    ],
+    "mean_judge_b": 0.9,
+    "acc_strict": 0.84,
+    "ci_strict": [
+     0.715,
+     0.917
+    ],
+    "mean_strict": 0.89,
+    "fact_recall": 0.91,
+    "mean_seconds": 22.67,
+    "median_seconds": 15.8,
+    "mean_tool_calls": 4.52,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 2.64,
+    "median_mcp_calls": 2.0,
+    "mean_input_tokens": 101986.7,
+    "median_input_tokens": 85472.0,
+    "mean_output_tokens": 1275.86,
+    "median_output_tokens": 1173.0,
+    "mean_cost_usd": 0.057,
+    "median_cost_usd": 0.1
+   },
+   "kip": {
+    "n": 50,
+    "acc_judge_a": 0.96,
+    "ci_judge_a": [
+     0.865,
+     0.989
+    ],
+    "mean_judge_a": 0.98,
+    "acc_judge_b": 0.96,
+    "ci_judge_b": [
+     0.865,
+     0.989
+    ],
+    "mean_judge_b": 0.98,
+    "acc_strict": 0.96,
+    "ci_strict": [
+     0.865,
+     0.989
+    ],
+    "mean_strict": 0.98,
+    "fact_recall": 0.86,
+    "mean_seconds": 17.692,
+    "median_seconds": 17.0,
+    "mean_tool_calls": 4.5,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 1.58,
+    "median_mcp_calls": 1.0,
+    "mean_input_tokens": 96564.28,
+    "median_input_tokens": 84849.5,
+    "mean_output_tokens": 1553.46,
+    "median_output_tokens": 1411.5,
+    "mean_cost_usd": 0.068,
+    "median_cost_usd": 0.1
+   },
+   "multi": {
+    "n": 20,
+    "acc_judge_a": 1.0,
+    "ci_judge_a": [
+     0.839,
+     1.0
+    ],
+    "mean_judge_a": 1.0,
+    "acc_judge_b": 1.0,
+    "ci_judge_b": [
+     0.839,
+     1.0
+    ],
+    "mean_judge_b": 1.0,
+    "acc_strict": 1.0,
+    "ci_strict": [
+     0.839,
+     1.0
+    ],
+    "mean_strict": 1.0,
+    "fact_recall": 0.908,
+    "mean_seconds": 29.91,
+    "median_seconds": 15.6,
+    "mean_tool_calls": 4.1,
+    "median_tool_calls": 4.0,
+    "mean_mcp_calls": 1.45,
+    "median_mcp_calls": 1.0,
+    "mean_input_tokens": 90633.35,
+    "median_input_tokens": 84219.0,
+    "mean_output_tokens": 1446.9,
+    "median_output_tokens": 1381.0,
+    "mean_cost_usd": 0.053,
+    "median_cost_usd": 0.0
+   }
+  }
+ },
+ "cc-pipeshub-code": {
+  "n": 180,
+  "acc_judge_a": 0.6,
+  "ci_judge_a": [
+   0.527,
+   0.669
+  ],
+  "mean_judge_a": 0.706,
+  "acc_judge_b": 0.556,
+  "ci_judge_b": [
+   0.483,
+   0.626
+  ],
+  "mean_judge_b": 0.697,
+  "acc_strict": 0.556,
+  "ci_strict": [
+   0.483,
+   0.626
+  ],
+  "mean_strict": 0.675,
+  "fact_recall": 0.676,
+  "mean_seconds": 18.586,
+  "median_seconds": 17.7,
+  "mean_tool_calls": 6.089,
+  "median_tool_calls": 6.0,
+  "mean_mcp_calls": 0.644,
+  "median_mcp_calls": 1.0,
+  "mean_input_tokens": 87500.244,
+  "median_input_tokens": 75389.0,
+  "mean_output_tokens": 1960.783,
+  "median_output_tokens": 1836.0,
+  "mean_cost_usd": 0.06,
+  "median_cost_usd": 0.1,
+  "by_type": {
+   "code": {
+    "n": 20,
+    "acc_judge_a": 1.0,
+    "ci_judge_a": [
+     0.839,
+     1.0
+    ],
+    "mean_judge_a": 1.0,
+    "acc_judge_b": 1.0,
+    "ci_judge_b": [
+     0.839,
+     1.0
+    ],
+    "mean_judge_b": 1.0,
+    "acc_strict": 1.0,
+    "ci_strict": [
+     0.839,
+     1.0
+    ],
+    "mean_strict": 1.0,
+    "fact_recall": 1.0,
+    "mean_seconds": 10.695,
+    "median_seconds": 8.2,
+    "mean_tool_calls": 3.75,
+    "median_tool_calls": 3.0,
+    "mean_mcp_calls": 0.6,
+    "median_mcp_calls": 1.0,
+    "mean_input_tokens": 54690.45,
+    "median_input_tokens": 48972.0,
+    "mean_output_tokens": 1099.05,
+    "median_output_tokens": 875.5,
+    "mean_cost_usd": 0.038,
+    "median_cost_usd": 0.0
+   },
+   "docs": {
+    "n": 40,
+    "acc_judge_a": 0.725,
+    "ci_judge_a": [
+     0.572,
+     0.839
+    ],
+    "mean_judge_a": 0.838,
+    "acc_judge_b": 0.675,
+    "ci_judge_b": [
+     0.52,
+     0.799
+    ],
+    "mean_judge_b": 0.812,
+    "acc_strict": 0.675,
+    "ci_strict": [
+     0.52,
+     0.799
+    ],
+    "mean_strict": 0.8,
+    "fact_recall": 0.671,
+    "mean_seconds": 18.76,
+    "median_seconds": 17.9,
+    "mean_tool_calls": 6.175,
+    "median_tool_calls": 6.0,
+    "mean_mcp_calls": 0.675,
+    "median_mcp_calls": 1.0,
+    "mean_input_tokens": 83227.075,
+    "median_input_tokens": 75250.5,
+    "mean_output_tokens": 1998.3,
+    "median_output_tokens": 1851.0,
+    "mean_cost_usd": 0.059,
+    "median_cost_usd": 0.1
+   },
+   "jira": {
+    "n": 50,
+    "acc_judge_a": 0.0,
+    "ci_judge_a": [
+     0.0,
+     0.071
+    ],
+    "mean_judge_a": 0.19,
+    "acc_judge_b": 0.0,
+    "ci_judge_b": [
+     0.0,
+     0.071
+    ],
+    "mean_judge_b": 0.23,
+    "acc_strict": 0.0,
+    "ci_strict": [
+     0.0,
+     0.071
+    ],
+    "mean_strict": 0.17,
+    "fact_recall": 0.32,
+    "mean_seconds": 22.816,
+    "median_seconds": 20.6,
+    "mean_tool_calls": 7.7,
+    "median_tool_calls": 7.0,
+    "mean_mcp_calls": 0.66,
+    "median_mcp_calls": 1.0,
+    "mean_input_tokens": 117469.24,
+    "median_input_tokens": 95887.5,
+    "mean_output_tokens": 2387.42,
+    "median_output_tokens": 2209.0,
+    "mean_cost_usd": 0.071,
+    "median_cost_usd": 0.1
+   },
+   "kip": {
+    "n": 50,
+    "acc_judge_a": 0.88,
+    "ci_judge_a": [
+     0.762,
+     0.944
+    ],
+    "mean_judge_a": 0.93,
+    "acc_judge_b": 0.82,
+    "ci_judge_b": [
+     0.692,
+     0.902
+    ],
+    "mean_judge_b": 0.91,
+    "acc_strict": 0.82,
+    "ci_strict": [
+     0.692,
+     0.902
+    ],
+    "mean_strict": 0.9,
+    "fact_recall": 0.857,
+    "mean_seconds": 18.394,
+    "median_seconds": 17.0,
+    "mean_tool_calls": 5.8,
+    "median_tool_calls": 6.0,
+    "mean_mcp_calls": 0.52,
+    "median_mcp_calls": 1.0,
+    "mean_input_tokens": 82928.78,
+    "median_input_tokens": 78114.5,
+    "mean_output_tokens": 1965.4,
+    "median_output_tokens": 1864.5,
+    "mean_cost_usd": 0.063,
+    "median_cost_usd": 0.1
+   },
+   "multi": {
+    "n": 20,
+    "acc_judge_a": 0.75,
+    "ci_judge_a": [
+     0.531,
+     0.888
+    ],
+    "mean_judge_a": 0.875,
+    "acc_judge_b": 0.6,
+    "ci_judge_b": [
+     0.387,
+     0.781
+    ],
+    "mean_judge_b": 0.8,
+    "acc_strict": 0.6,
+    "ci_strict": [
+     0.387,
+     0.781
+    ],
+    "mean_strict": 0.8,
+    "fact_recall": 0.8,
+    "mean_seconds": 16.03,
+    "median_seconds": 16.1,
+    "mean_tool_calls": 4.95,
+    "median_tool_calls": 5.0,
+    "mean_mcp_calls": 0.9,
+    "median_mcp_calls": 1.0,
+    "mean_input_tokens": 65362.55,
+    "median_input_tokens": 67443.5,
+    "mean_output_tokens": 1669.35,
+    "median_output_tokens": 1652.0,
+    "mean_cost_usd": 0.05,
+    "median_cost_usd": 0.0
+   }
+  }
+ },
+ "cc-plain": {
+  "n": 180,
+  "acc_judge_a": 0.578,
+  "ci_judge_a": [
+   0.505,
+   0.648
+  ],
+  "mean_judge_a": 0.683,
+  "acc_judge_b": 0.539,
+  "ci_judge_b": [
+   0.466,
+   0.61
+  ],
+  "mean_judge_b": 0.692,
+  "acc_strict": 0.533,
+  "ci_strict": [
+   0.461,
+   0.605
+  ],
+  "mean_strict": 0.656,
+  "fact_recall": 0.655,
+  "mean_seconds": 17.523,
+  "median_seconds": 16.9,
+  "mean_tool_calls": 5.611,
+  "median_tool_calls": 5.0,
+  "mean_mcp_calls": 0.0,
+  "median_mcp_calls": 0.0,
+  "mean_input_tokens": 57479.0,
+  "median_input_tokens": 48507.0,
+  "mean_output_tokens": 1824.172,
+  "median_output_tokens": 1742.0,
+  "mean_cost_usd": 0.05,
+  "median_cost_usd": 0.0,
+  "by_type": {
+   "code": {
+    "n": 20,
+    "acc_judge_a": 0.9,
+    "ci_judge_a": [
+     0.699,
+     0.972
+    ],
+    "mean_judge_a": 0.95,
+    "acc_judge_b": 0.9,
+    "ci_judge_b": [
+     0.699,
+     0.972
+    ],
+    "mean_judge_b": 0.95,
+    "acc_strict": 0.9,
+    "ci_strict": [
+     0.699,
+     0.972
+    ],
+    "mean_strict": 0.95,
+    "fact_recall": 0.975,
+    "mean_seconds": 9.05,
+    "median_seconds": 7.6,
+    "mean_tool_calls": 2.4,
+    "median_tool_calls": 1.5,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 28631.15,
+    "median_input_tokens": 24368.5,
+    "mean_output_tokens": 884.5,
+    "median_output_tokens": 619.0,
+    "mean_cost_usd": 0.029,
+    "median_cost_usd": 0.0
+   },
+   "docs": {
+    "n": 40,
+    "acc_judge_a": 0.725,
+    "ci_judge_a": [
+     0.572,
+     0.839
+    ],
+    "mean_judge_a": 0.812,
+    "acc_judge_b": 0.6,
+    "ci_judge_b": [
+     0.446,
+     0.737
+    ],
+    "mean_judge_b": 0.762,
+    "acc_strict": 0.6,
+    "ci_strict": [
+     0.446,
+     0.737
+    ],
+    "mean_strict": 0.75,
+    "fact_recall": 0.604,
+    "mean_seconds": 18.992,
+    "median_seconds": 18.7,
+    "mean_tool_calls": 6.1,
+    "median_tool_calls": 6.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 56260.575,
+    "median_input_tokens": 47119.5,
+    "mean_output_tokens": 1997.8,
+    "median_output_tokens": 1901.5,
+    "mean_cost_usd": 0.051,
+    "median_cost_usd": 0.0
+   },
+   "jira": {
+    "n": 50,
+    "acc_judge_a": 0.0,
+    "ci_judge_a": [
+     0.0,
+     0.071
+    ],
+    "mean_judge_a": 0.17,
+    "acc_judge_b": 0.0,
+    "ci_judge_b": [
+     0.0,
+     0.071
+    ],
+    "mean_judge_b": 0.25,
+    "acc_strict": 0.0,
+    "ci_strict": [
+     0.0,
+     0.071
+    ],
+    "mean_strict": 0.15,
+    "fact_recall": 0.34,
+    "mean_seconds": 21.29,
+    "median_seconds": 19.8,
+    "mean_tool_calls": 7.1,
+    "median_tool_calls": 6.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 74719.12,
+    "median_input_tokens": 62090.5,
+    "mean_output_tokens": 2154.12,
+    "median_output_tokens": 1930.0,
+    "mean_cost_usd": 0.057,
+    "median_cost_usd": 0.1
+   },
+   "kip": {
+    "n": 50,
+    "acc_judge_a": 0.84,
+    "ci_judge_a": [
+     0.715,
+     0.917
+    ],
+    "mean_judge_a": 0.91,
+    "acc_judge_b": 0.82,
+    "ci_judge_b": [
+     0.692,
+     0.902
+    ],
+    "mean_judge_b": 0.91,
+    "acc_strict": 0.8,
+    "ci_strict": [
+     0.67,
+     0.888
+    ],
+    "mean_strict": 0.89,
+    "fact_recall": 0.817,
+    "mean_seconds": 17.2,
+    "median_seconds": 16.0,
+    "mean_tool_calls": 5.42,
+    "median_tool_calls": 5.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 58526.38,
+    "median_input_tokens": 50587.5,
+    "mean_output_tokens": 1825.28,
+    "median_output_tokens": 1701.0,
+    "mean_cost_usd": 0.052,
+    "median_cost_usd": 0.0
+   },
+   "multi": {
+    "n": 20,
+    "acc_judge_a": 0.75,
+    "ci_judge_a": [
+     0.531,
+     0.888
+    ],
+    "mean_judge_a": 0.875,
+    "acc_judge_b": 0.7,
+    "ci_judge_b": [
+     0.481,
+     0.855
+    ],
+    "mean_judge_b": 0.85,
+    "acc_strict": 0.7,
+    "ci_strict": [
+     0.481,
+     0.855
+    ],
+    "mean_strict": 0.85,
+    "fact_recall": 0.817,
+    "mean_seconds": 14.445,
+    "median_seconds": 14.7,
+    "mean_tool_calls": 4.6,
+    "median_tool_calls": 5.0,
+    "mean_mcp_calls": 0.0,
+    "median_mcp_calls": 0.0,
+    "mean_input_tokens": 43044.95,
+    "median_input_tokens": 40486.0,
+    "mean_output_tokens": 1588.95,
+    "median_output_tokens": 1633.0,
+    "mean_cost_usd": 0.044,
+    "median_cost_usd": 0.0
+   }
+  }
+ },
+ "judge_agreement": {
+  "exact": 0.906,
+  "kappa": 0.782
+ }
+}

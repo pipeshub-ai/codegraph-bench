@@ -237,7 +237,7 @@ class MemGraph:
         return rows
 
     async def get_nodes_by_field_prefix(self, collection, field_name, prefix, filters=None,
-                                        limit=400, transaction=None, raise_on_error=False):
+                                        limit=400, transaction=None, raise_on_error=False, return_fields=None):
         rows = [d for d in self._docs(collection)
                 if str(d.get(field_name) or "").startswith(prefix)
                 and all(d.get(k) == v for k, v in (filters or {}).items())]

@@ -19,3 +19,11 @@ bench/swebench/
 bench/contextbench/ContextBench/
 bench/contextbench/git/
 bench/contextbench/.venv311/
+# B7/B11 stacks: secrets and state the setup scripts write (examples stay tracked)
+bench/b7/*.env
+bench/b11/*.env
+bench/*/admin.env
+bench/*/pat.token
+bench/*/state*.json
+bench/b11/truth/runtime/
+bench/b11/truth/pylib/

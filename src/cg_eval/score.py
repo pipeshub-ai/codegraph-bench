@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import json
+import os
 from collections import Counter, defaultdict
 from pathlib import Path
 
@@ -33,6 +34,9 @@ def _norm(ep: str) -> str:
         parts = q.split(".")
         if len(parts) >= 2 and parts[-1] == parts[-2]:
             q = ".".join(parts[:-1] + ["<init>"])
+    elif q.endswith(".<constructor>") and os.environ.get("CG_TS_CTOR_AS_CLASS"):
+        # `new C()`: SCIP names C's constructor, PipesHub the class; same call.
+        q = q[: -len(".<constructor>")]
     return f"{path}::{q}"
 
 
@@ -62,8 +66,28 @@ def score_edges(key: dict, produced: list[dict]) -> dict:
     for e in key["edges"]:
         gold[(_group(e["rel"]), _norm(e["from"]), _norm(e["to"]))] = e
     got: dict[tuple, dict] = {}
+    ts_names = os.environ.get("CG_TS_CTOR_AS_CLASS")
+    gold_eps = {ep for g in gold for ep in g[1:]} if ts_names else set()
+
+    def _ts(ep: str) -> str:
+        """TS naming only: `C.constructor` is SCIP's `C.<constructor>` (folded to `C`), and a
+        namespace function `ns.f` is SCIP's `f` when the key has `f` and not `ns.f`."""
+        if not ts_names:
+            return ep
+        if ep.endswith(".constructor"):
+            ep = ep[: -len(".constructor")]
+        path, sep, q = ep.partition("::")
+        if sep and ep not in gold_eps and "." in q and f"{path}::{q.rsplit('.', 1)[1]}" in gold_eps:
+            return f"{path}::{q.rsplit('.', 1)[1]}"
+        return ep
+
+    callbacks = set()  # calls through a function-typed property: SCIP has no such target to judge them by
     for e in produced:
-        got.setdefault((_group(e["rel"]), _norm(e["from"]), _norm(e["to"])), e)
+        k = (_group(e["rel"]), _ts(_norm(e["from"])), _ts(_norm(e["to"])))
+        if e.get("resolution") == "callback-property":
+            callbacks.add(k)
+        else:
+            got.setdefault(k, e)
 
     tp = set(gold) & set(got)
     fp = set(got) - set(gold)
@@ -134,6 +158,7 @@ def score_edges(key: dict, produced: list[dict]) -> dict:
                                for c, v in sorted(by_cat.items())},
         "precision_by_confidence": {str(c): v["tp"] / (v["tp"] + v["fp"]) if v["tp"] + v["fp"] else None
                                     for c, v in sorted(by_conf.items(), key=lambda kv: str(kv[0]))},
+        "callback_property": {"edges": len(callbacks), "in_key": len(callbacks & set(gold))},
         "false_positive_reasons": dict(fp_reasons.most_common()),
         "heritage_relation": dict(heritage_type),
         "false_positives": fp_rows,

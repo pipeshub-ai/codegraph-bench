@@ -19,8 +19,9 @@ files are candidates for no method, as in PipesHub's tools by default.
 usage: python -m cg_eval.swebench run --split dev|test [--only ID ...] [--no-dense]
        python -m cg_eval.swebench fuse
 """
-import os
 from __future__ import annotations
+
+import os
 
 import argparse
 import hashlib
