@@ -19,9 +19,10 @@ b5a           = "f9a196bfc"   # B5a Lite/Verified no-LLM ranking and graph v2 re
 b5b_search    = "f9a196bfc"   # B5b search-only arm (2026-10-18)
 b5b_graph     = "4b3b974b7"   # B5b graph arm rerun without the stale-graph warning (2026-10-20)
 b5c           = "4b3b974b7"   # ContextBench retrieval and agent tiers (harness default PIPESHUB_PY on 2026-10-20/21; see AGENTS.md)
-b11           = "PENDING"     # B11 PipesHub arm: main with #5106 (wider text search, unlinked call sites, the
-                              # constructor path rule), #5352 (the no-path note) and #5353 (missing-path listing).
-                              # Set when #5352 merges. Published numbers: an experiment build with the same
+b11           = "e2ba76a5d"   # B11 PipesHub arm: main at 57b05b83d (with #5472, the definition each unlinked call
+                              # site sits in) plus #5473 (calls to follow after a path search finds nothing) and
+                              # #5474 (callers and impact through overridden methods), merged on the fork's branch
+                              # bench/codegraph-b11-final. Published numbers: an experiment build with the same
                               # behaviour behind switches; see AGENTS.md "Provenance" for B11
 b7            = "0b33bc842"   # B7 (Kafka): image built 2026-10-21 05:17 from the code-graph PR's tree, whose last
                               # commit was this one (inferred from the times; the tree is not kept)

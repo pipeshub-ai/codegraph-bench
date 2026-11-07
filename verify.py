@@ -34,7 +34,8 @@ RULES = {
     # Claude Code answering 300 questions: identical runs differed by up to 2 points, and the model behind an
     # alias moves; accuracy per setup overall and per question kind, not tokens, time or cost.
     "b11": (0.03, 0.0, r"^all:all/[a-z]+/score$", r"$^"),
-    "b11-kind": (0.08, 0.0, r"^kind:[a-z0-9]+/[a-z]+/score$", r"$^"),  # 9-100 questions a kind
+    # Only kinds with 20+ questions on both codebases: the smaller ones (1-15) move more than this between runs.
+    "b11-kind": (0.08, 0.0, r"^kind:(callers|debug|flow|impact|locate)/[a-z]+/score$", r"$^"),
     "b7v2": (0.05, 0.0, r"^[a-z-]+/acc_judge_[ab]$", r"$^"),  # 90 questions, LLM judges
 }
 

@@ -45,6 +45,8 @@ pipeshub() {
   for ref in "${refs[@]}"; do
     # B7/B11 pins are on upstream main, not on the fork's backup branch: fetch it when a pin is missing.
     git -C "$base" cat-file -e "$ref^{commit}" 2>/dev/null || git -C "$base" fetch -q "$(pin pipeshub upstream)" main
+    # The B11 pin merges open pull requests on the fork's bench/ branches.
+    git -C "$base" cat-file -e "$ref^{commit}" 2>/dev/null || git -C "$base" fetch -q "$repo" 'refs/heads/bench/*:refs/remotes/origin/bench/*'
     [ -d "$WORK/pipeshub@$ref" ] || git -C "$base" worktree add -q --detach "$WORK/pipeshub@$ref" "$ref"
     echo "pipeshub@$ref ready"
   done

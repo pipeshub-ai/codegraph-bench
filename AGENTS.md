@@ -171,8 +171,10 @@ bench/run.sh verify b11
 
 - **Setups.** *Claude Code alone*: the checkout through Read, Grep, Glob and read-only shell. *+ Graphify*: also
   Graphify's MCP server, rules and hooks as its README recommends. *+ PipesHub*: also the stack's
-  `/mcp?tools=code` with a personal access token, and one prompt line asking the agent to start with PipesHub's
-  tools (`B6_PIPESHUB_HINT_EXTRA` in `run_b11.sh`). Every setup gets the same base prompt and questions.
+  `/mcp?tools=code` with a personal access token, and three prompt lines: one asking the agent to start with PipesHub's
+  tools, one on when a call on a value of unknown type counts toward a path, and one asking for independent
+  lookups in the same turn (`B6_PIPESHUB_HINT_EXTRA` in `run_b11.sh`). Every setup gets the same base prompt and
+  questions.
 - **Scoring.** Each answer is a list of functions, scored by F1 against the key. VS Code's key is SCIP's;
   Django's adds calls seen running Django's own tests (rebuild with `bench/b11/truth/trace.sh` and
   `cg_eval.b12_runtime`; optional, the key ships in `data-v2`).
@@ -182,8 +184,9 @@ bench/run.sh verify b11
 - **Time.** With 12 questions in flight against one stack, 300 questions with one model and setup took about
   15 minutes with Sonnet and up to an hour with Haiku (more turns per question). Indexing the two snapshots
   takes longer than any run; `wait_index.sh` says when it is done.
-- **Check.** `verify.py b11` compares each setup's overall accuracy within 3 points and each question kind within
-  8; tokens, time and cost are reported, not checked.
+- **Check.** `verify.py b11` compares each setup's overall accuracy within 3 points and, for the five question kinds
+  with 20 or more questions (callers, debug, flow, impact, locate), within 8; the smaller kinds move more than that
+  between identical runs. Tokens, time and cost are reported, not checked.
 
 ### 3i. B7: Kafka, with and without the project's knowledge (keys; half a day)
 
@@ -242,9 +245,9 @@ supplies the Go toolchain). If a newer image changes a Java answer key, use the 
 
 | Numbers | What produced them |
 | --- | --- |
-| B11 Claude Code alone, + Graphify | Claude Code 2.1.x with Graphify 0.9.92, 2026-11-01..02: two runs with Haiku, one with Sonnet and Opus. No PipesHub involved |
-| B11 + PipesHub: accuracy, tokens, cost | An experiment build of PipesHub (`exp/cg-ab` at `746e847ad`, not public) with four switches on: the wider text scan, unlinked call sites in caller lists, the constructor path rule, and a note on a path search that found nothing; 2026-11-03..04, one run with Haiku and Opus, two with Sonnet on VS Code and three on Django. The same behaviour is now on `main` without switches: #5106 (the first three), #5352 (the note) and #5353 (the missing-path listing). The `b11` pin is that `main`; it has not been re-run, so expect agreement within the tolerance, not exactly |
-| B11 + PipesHub: time | The same questions on an earlier build without the extra prompt line (image of 2026-10-30, the Python call-resolution work of #5105), because part of the experiment-build runs overlapped a period when the stack was overloaded (see Pitfalls) |
+| B11 Claude Code alone, + Graphify | Claude Code 2.1.x with Graphify 0.9.92, 2026-11-01..05. VS Code: two runs with Haiku, one with Sonnet and Opus. Django: two runs with Haiku, three with Sonnet; Claude Code alone twice and Graphify once with Opus. No PipesHub involved |
+| B11 + PipesHub: accuracy, tokens, cost | An experiment build of PipesHub (`exp/cg-ab2` at `fec6544a9`, not public) on `main` of 2026-11-05, with four switches on: the definition each unlinked call site sits in, the calls to follow after a path search that found nothing (short listing), and callers and impact through overridden methods. One run per model and codebase, 2026-11-05..06, with the three prompt lines in `run_b11.sh`. The same behaviour without switches is #5472 (merged), #5473 and #5474; the `b11` pin merges them. Their review fixes (a hard cap on the calls looked up, callable kinds filtered before the two definitions are taken, failed walks skipped and logged) came after the runs, and the pin has not been re-run, so expect agreement within the tolerance, not exactly |
+| B11 + PipesHub: time | 60 of the questions (`*-time-pipeshub-*`) rerun on the same build with at most 6 in flight, because the full runs shared the stack with up to 24 questions in flight and its tool calls slowed. The Claude Code alone and Graphify times are from their full runs; `*-time-alone-*` has Claude Code alone on the same 60 questions for a like-for-like check |
 | B7 | Image built 2026-10-21 05:17 from the code-graph pull request's tree; its last commit then was `0b33bc842` (inferred from the times). Runs 2026-10-30: Claude Code (Sonnet) twice per setup, PipesHub's agent (`llm_1`) once per setup |
 
 ## 5. Pitfalls we hit (read before debugging)
@@ -302,8 +305,9 @@ reports and the B5 per-issue outputs.
 
 Release **`data-v2`** (`./bootstrap.sh data2`) adds B11's answer keys (`truth-b11.tar.gz`, unpacked into
 `bench/truth/vscode` and `bench/truth/django32`), every B11 answer with its scores (`b11-reports.tar.gz`: the
-`b11-q300-*`/`b12-q300-*` runs behind the Claude Code alone and Graphify rows, the `b11-full-*`/`b12-full-*`
-runs behind the PipesHub rows; `b11` is VS Code, `b12` Django) and B7's answers and both judges' grades
+`b11-q300-*`/`b12-q300-*` runs behind the Claude Code alone and Graphify rows, the `b11-final-*`/`b12-final-*`
+runs behind the PipesHub rows, and the `*-time-*` samples behind the PipesHub time column; `b11` is VS Code, `b12`
+Django) and B7's answers and both judges' grades
 (`b7-reports.tar.gz`). Agent transcripts are not included.
 
 ## 7. Layout
