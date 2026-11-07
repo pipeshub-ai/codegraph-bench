@@ -3,7 +3,7 @@
 # B11: 300 questions on each codebase (VS Code core, Django 3.2), 100 easy, 100 medium, 100 tough,
 # asked of headless Claude Code in three setups: alone, + Graphify (its README's rules and hooks),
 # + PipesHub (the cg-b11 stack's /mcp?tools=code). Each answer is scored against the answer key
-# (bench/truth/<repo>, release data-v2).
+# (bench/truth/<repo>, from data/v2).
 #
 #   MODELS="haiku sonnet opus"  REPOS="vscode django32"  ARMS=plain,graphify,pipeshub  REPEATS=1
 #   JOBS=3       questions in flight per model and repo. Keep the total at 12 or less against one

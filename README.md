@@ -28,7 +28,8 @@ the full procedure for every benchmark: prerequisites, commands, costs, the Pipe
 and the pitfalls. It is written so a coding agent can follow it without other context.
 
 Published numbers: `expected/published/` (tables) and `expected/reports/` (what `verify.py` checks). Answer keys,
-tool outputs and per-issue results: GitHub release `data-v1` (B1–B5) and `data-v2` (B11, B7).
+tool outputs and per-issue results: GitHub release `data-v1` (B1–B5) and `data/v2/` in this repo (B11, B7). B11's
+questions, each with its correct answer, are `bench/b11/questions-{vscode,django}-300.jsonl`.
 
 B11 and B7 run against a live PipesHub stack with Claude Code and need model keys: see AGENTS.md sections 3h and 3i.
 

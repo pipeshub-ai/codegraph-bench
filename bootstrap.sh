@@ -11,7 +11,7 @@
 #   ./bootstrap.sh fixtures              # the generated fixture repos (B3, B3b)
 #   ./bootstrap.sh datasets              # SWE-bench Lite + Verified, ContextBench (B5)
 #   ./bootstrap.sh data                  # the published answer keys and results (GitHub release data-v1)
-#   ./bootstrap.sh data2                 # B11 answer keys and the B11/B7 results (GitHub release data-v2)
+#   ./bootstrap.sh data2                 # B11 answer keys and the B11/B7 results (data/v2 in this repo)
 set -euo pipefail
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/bench/env.sh"
 cd "$ROOT"
@@ -157,10 +157,8 @@ data() {
   cd "$ROOT"
 }
 
-data2() {  # release data-v2: B11 answer keys + B11/B7 results
-  local tag=${DATA2_TAG:-data-v2} repo=${DATA_REPO:-pipeshub-ai/codegraph-bench}
-  mkdir -p "$WORK/data-v2" && cd "$WORK/data-v2"
-  fetch "$repo" "$tag" SHA256SUMS MANIFEST.md truth-b11.tar.gz b11-reports.tar.gz b7-reports.tar.gz
+data2() {  # data/v2 in this repo: B11 answer keys + B11/B7 results
+  cd "$ROOT/data/v2"
   sha256sum -c SHA256SUMS
   tar -xzf truth-b11.tar.gz -C "$ROOT"     # bench/truth/vscode, bench/truth/django32 : the B11 answer keys
   cd "$ROOT"

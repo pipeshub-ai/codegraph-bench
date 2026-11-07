@@ -177,7 +177,7 @@ bench/run.sh verify b11
   questions.
 - **Scoring.** Each answer is a list of functions, scored by F1 against the key. VS Code's key is SCIP's;
   Django's adds calls seen running Django's own tests (rebuild with `bench/b11/truth/trace.sh` and
-  `cg_eval.b12_runtime`; optional, the key ships in `data-v2`).
+  `cg_eval.b12_runtime`; optional, the key ships in `data/v2/`).
 - **Cost** at API prices, per question per setup: Haiku about $0.006–0.012, Sonnet $0.05–0.08, Opus
   $0.12–0.18. One run of everything (600 questions x 3 setups x 3 models) is about $400. The published runs
   used a Claude account (`B6_ANTHROPIC_KEY_FROM` empty) and report costs at API prices.
@@ -303,7 +303,7 @@ sha256sum -c SHA256SUMS
 `MANIFEST.md` in the release lists each asset: the answer keys, every tool's B1/B3b edges, the B1/B2/B3/B3b/B5
 reports and the B5 per-issue outputs.
 
-Release **`data-v2`** (`./bootstrap.sh data2`) adds B11's answer keys (`truth-b11.tar.gz`, unpacked into
+**`data/v2/`** in this repo (`./bootstrap.sh data2` checks and unpacks it) adds B11's answer keys (`truth-b11.tar.gz`, unpacked into
 `bench/truth/vscode` and `bench/truth/django32`), every B11 answer with its scores (`b11-reports.tar.gz`: the
 `b11-q300-*`/`b12-q300-*` runs behind the Claude Code alone and Graphify rows, the `b11-final-*`/`b12-final-*`
 runs behind the PipesHub rows, and the `*-time-*` samples behind the PipesHub time column; `b11` is VS Code, `b12`
