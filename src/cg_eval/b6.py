@@ -44,7 +44,9 @@ APPEND = (
 STACK_URL = os.environ.get("B6_PIPESHUB_URL")
 STACK_PAT = os.environ.get("B6_PIPESHUB_PAT_FILE")
 STACK_TOOLS = ("code_repos", "code_search", "code_semantic_search", "code_symbols", "code_neighbours",
-               "code_read", "code_outline", "code_path", "code_impact", "code_entry_points")
+               "code_read", "code_outline", "code_path", "code_impact", "code_entry_points",
+               # In PipesHub since 2026-11 (#5561, so in v1.2.0); older builds never list them.
+               "code_impact_of_diff", "code_history")
 # B11 best setup (B6_BEST_SETUP): each tool arm as its maker recommends, plus one line naming what is indexed.
 # PipesHub: only its code tools (its document tools stay hidden); its server instructions name them.
 # Graphify: its MCP tools, its CLI through Bash, and what `graphify claude install` adds (CLAUDE.md rules

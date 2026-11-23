@@ -178,7 +178,9 @@ bench/run.sh verify b11
 - **Scoring.** Each answer is a list of functions, scored by F1 against the key. VS Code's key is SCIP's;
   Django's adds calls seen running Django's own tests (rebuild with `bench/b11/truth/trace.sh` and
   `cg_eval.b12_runtime`; optional, the key ships in `data/v2/`).
-- **Runs behind the post.** + PipesHub: two runs per model and codebase on release v1.2.0 (the `b11` pin). Claude
+- **Runs behind the post.** + PipesHub: two runs per model and codebase on release v1.2.0 (the `b11` pin), with
+  Claude Code 2.1.330, Graphify 0.9.92 and the models `claude-haiku-5-5`, `claude-sonnet-5-5`, `claude-opus-5-5`.
+  Claude Code is not pinned: a different release can move Claude Code alone by a few points. Claude
   Code alone and + Graphify: the mean of 2–4 runs, the earlier ones plus one on 2026-11-23 (`RUNS.md` in each
   folder of `data/v3`).
 - **Cost** at API prices, per question per setup: Haiku about $0.006–0.012, Sonnet $0.05–0.08, Opus
