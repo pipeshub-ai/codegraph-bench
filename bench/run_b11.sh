@@ -8,6 +8,8 @@
 #   MODELS="haiku sonnet opus"  REPOS="vscode django32"  ARMS=plain,graphify,pipeshub  REPEATS=1
 #   JOBS=3       questions in flight per model and repo. Keep the total at 12 or less against one
 #                PipesHub stack: past ~30 its Neo4j connection pool ran out and tool calls failed.
+#   SERIAL=1     one codebase, model and setup at a time (JOBS defaults to 8), as the post's v1.2.0 runs and
+#                times were measured; without it everything runs side by side and times are not comparable.
 #   PREFIX=b11   results in reports/<PREFIX>-<repo>-<model>/
 #   B6_ANTHROPIC_KEY_FROM="<entry>@$MODELS_JSON" bills an API key; empty (the default) runs on the
 #                Claude Code account you are logged in with, as the published runs did.
@@ -23,6 +25,7 @@ export B6_ANTHROPIC_KEY_FROM=${B6_ANTHROPIC_KEY_FROM-}
 export B6_PIPESHUB_HINT_EXTRA=" Start every codebase question with these tools: before your first Grep, Glob, Read or Bash search, call pipeshub_code_search, pipeshub_code_neighbours, pipeshub_code_path or pipeshub_code_impact for the symbols or behaviour the question names, and read raw files for the lines they locate. The graph links a call only when the receiver's type is known from the code, so a caller list, impact set or path can be incomplete where values are untyped or passed in; for every-caller, impact or does-A-reach-B questions also search the call text before answering. A call on a value of unknown type (a parameter, an attribute, a value passed in or returned) can run any method of that name, so a chain may pass through one -- but only a call you have read whose value can be an object leading toward the second symbol. A dispatcher that could run anything (it calls a method on whatever it is given) does not show a path by itself: if every call you checked leads elsewhere, the answer is an empty list. Make independent lookups in the same turn: call several tools at once whenever one does not need another's result."
 wait_cpu() { while [ "$(vmstat 3 2 | tail -1 | awk '{print 100-$15}')" -ge 90 ]; do sleep 30; done; }
 "$B11/keep_acl.sh" & ACL=$!; trap 'kill $ACL' EXIT
+J=${JOBS:-$([ -n "${SERIAL:-}" ] && echo 8 || echo 3)}
 declare -A BUDGET=([haiku]=60 [sonnet]=200 [opus]=300)
 mkdir -p "$ROOT/reports/logs"
 pids=()
@@ -37,15 +40,19 @@ for repo in ${REPOS:-vscode django32}; do
   for m in ${MODELS:-haiku sonnet opus}; do
     out=${PREFIX:-b11}-$repo-$m
     mkdir -p "$ROOT/reports/$out" && cp "$q" "$ROOT/reports/$out/questions.jsonl"
+    if [ -n "${SERIAL:-}" ]; then arm_sets=$(echo "${ARMS:-plain,graphify,pipeshub}" | tr ',' ' '); else arm_sets=${ARMS:-plain,graphify,pipeshub}; fi
     ( for r in $(seq 1 "${REPEATS:-1}"); do
-        wait_cpu
-        env "${env[@]}" B6_MODEL=$m B8_OUT=$out B8_BUDGET_USD=${BUDGET[$m]} \
-          "$PY" -m cg_eval.b8 run --repeat "$r" --arms "${ARMS:-plain,graphify,pipeshub}" --jobs "${JOBS:-3}" \
-          ${LIMIT:+--limit $LIMIT} >> "$ROOT/reports/logs/$out.log" 2>&1
+        for arms in $arm_sets; do
+          wait_cpu
+          env "${env[@]}" B6_MODEL=$m B8_OUT=$out B8_BUDGET_USD=${BUDGET[$m]} \
+            "$PY" -m cg_eval.b8 run --repeat "$r" --arms "$arms" --jobs "$J" \
+            ${LIMIT:+--limit $LIMIT} >> "$ROOT/reports/logs/$out.log" 2>&1
+        done
       done
       env "${env[@]}" B8_OUT=$out "$PY" -m cg_eval.b8 score > "$ROOT/reports/logs/$out-score.log" 2>&1
       echo "done $repo $m" ) &
     pids+=($!)
+    [ -n "${SERIAL:-}" ] && wait "${pids[-1]}"
   done
 done
 wait "${pids[@]}"  # not the guard, which never exits

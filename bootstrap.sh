@@ -12,6 +12,7 @@
 #   ./bootstrap.sh datasets              # SWE-bench Lite + Verified, ContextBench (B5)
 #   ./bootstrap.sh data                  # the published answer keys and results (GitHub release data-v1)
 #   ./bootstrap.sh data2                 # B11 answer keys and the B11/B7 results (data/v2 in this repo)
+#   ./bootstrap.sh data3                 # B11 on PipesHub v1.2.0: the post's runs (data/v3) and the answer keys
 set -euo pipefail
 . "$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/bench/env.sh"
 cd "$ROOT"
@@ -164,9 +165,16 @@ data2() {  # data/v2 in this repo: B11 answer keys + B11/B7 results
   cd "$ROOT"
 }
 
+data3() {  # data/v3 in this repo: B11 on PipesHub v1.2.0; the answer keys are still data/v2's
+  (cd "$ROOT/data/v3" && sha256sum -c SHA256SUMS)
+  data2
+  mkdir -p "$ROOT/reports/published-v3"
+  tar -xzf "$ROOT/data/v3/b11-reports.tar.gz" -C "$ROOT/reports/published-v3"   # the post's runs, to compare against
+}
+
 case "${1:-}" in
   smoke)    pipeshub "$(pin pipeshub b1)"; subjects requests; tools; scip ;;
   all)      pipeshub; subjects; tools; scip; fixtures; datasets ;;
-  pipeshub|subjects|tools|scip|fixtures|datasets|data|data2) f=$1; shift; "$f" "$@" ;;
+  pipeshub|subjects|tools|scip|fixtures|datasets|data|data2|data3) f=$1; shift; "$f" "$@" ;;
   *) sed -n '2,15p' "$0"; exit 1 ;;
 esac
